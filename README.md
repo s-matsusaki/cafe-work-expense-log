@@ -40,6 +40,9 @@ github作成の.gitignoreとlaravel作成の.gitignoreが競合するので、la
 Laravelの中身をリポジトリ直下にコピーします。
 cp -R temp-laravel/. .
 
+一時フォルダを削除します。
+rm -rf temp-laravel
+
 
 ## About Laravel
 
