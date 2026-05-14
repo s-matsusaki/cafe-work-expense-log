@@ -10,6 +10,13 @@
 # cafe-work-expense-log
 フリーランス活動に伴うカフェ利用費、学習書籍、作業記録、画像を管理するLaravelアプリ
 
+## 使用技術
+Laravel
+PHP-FPM
+nginx
+PostgreSQL
+Docker / Docker Compose
+
 ## 初回セットアップ
 
 ### Laravelプロジェクトの作成
@@ -43,53 +50,80 @@ cp -R temp-laravel/. .
 一時フォルダを削除します。
 rm -rf temp-laravel
 
+### PHP-FPMコンテナの作成
+Laravelを実行するPHPコンテナを作成するため、以下のDockerfileを用意します。
 
-## About Laravel
+docker/php/Dockerfile
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+PHP-FPMを使用することで、nginxからPHP処理を受け取り、Laravelアプリケーションを実行します。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### nginx設定の作成
+Laravel用のnginx設定ファイルを作成します。
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+docker/nginx/default.conf
 
-## Learning Laravel
+Laravelでは、Web公開ディレクトリをプロジェクト直下ではなく public/ にする必要があります。
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+そのため、nginxの root は以下を参照するように設定しています。
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+/var/www/html/public
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+これにより、.env や app/ など、直接公開すべきではないファイルやディレクトリがWebから参照されないようにしています。
 
-## Agentic Development
+### PostgreSQLコンテナの作成
+開発用データベースとして、PostgreSQLコンテナを使用します。
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+compose.yaml では、PostgreSQLのデータをDocker volumeに保存するようにしています。
 
-```bash
-composer require laravel/boost --dev
+volumes:
+  postgres-data:
 
-php artisan boost:install
-```
+これにより、コンテナを停止・削除しても、volumeを削除しない限りDBデータは保持されます。
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### .env のPostgreSQL設定
+Laravelの .env をPostgreSQL用に設定します。
 
-## Contributing
+DB_CONNECTION=pgsql
+DB_HOST=postgres
+DB_PORT=5432
+DB_DATABASE=cafe_work_record
+DB_USERNAME=laravel
+DB_PASSWORD=secret
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+DB_HOST=postgres は、compose.yaml で定義しているPostgreSQLサービス名です。
 
-## Code of Conduct
+Docker Compose内では、サービス名をホスト名として利用できます。
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Docker Composeで起動
+以下のコマンドで、Dockerコンテナをビルドして起動します。
 
-## Security Vulnerabilities
+docker compose up -d --build
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+起動後、コンテナの状態を確認します。
 
-## License
+docker compose ps
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+以下のコンテナが起動していればOKです。
+
+nginx
+php
+postgres
+
+### マイグレーション実行
+
+DB接続確認を兼ねて、Laravelのマイグレーションを実行します。
+
+PHPコンテナ内でLaravelのマイグレーションを実行します。
+
+docker compose exec php php artisan migrate
+
+1つ目の php は、compose.yaml に定義したサービス名です。
+
+2つ目の php は、コンテナ内で実行するPHPコマンドです。
+
+### ブラウザで表示確認
+以下にアクセスして、Laravelの初期画面が表示されることを確認します。
+
+http://localhost:8080
+
+表示できれば、Docker開発環境の構築は完了です。
