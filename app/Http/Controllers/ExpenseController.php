@@ -68,32 +68,67 @@ class ExpenseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Expense $expense)
     {
-        //
+        $expense->load(['cafe', 'workSession']);
+
+        return view('expenses.show', compact('expense'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Expense $expense)
     {
-        //
+        $cafes = Cafe::orderBy('name')->get();
+
+        $workSessions = WorkSession::with('cafe')
+            ->latest('work_date')
+            ->latest()
+            ->get();
+
+        return view('expenses.edit', compact('expense', 'cafes', 'workSessions'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Expense $expense)
     {
-        //
+        $validated = $request->validate([
+            'expense_date' => ['required', 'date'],
+            'title' => ['required', 'string', 'max:255'],
+            'amount' => ['required', 'integer', 'min:0'],
+            'expense_type' => ['required', 'string', 'max:50'],
+            'payment_method' => ['nullable', 'string', 'max:50'],
+            'cafe_id' => ['nullable', 'exists:cafes,id'],
+            'work_session_id' => ['nullable', 'exists:work_sessions,id'],
+            'accounting_recorded' => ['nullable', 'boolean'],
+            'accounting_recorded_at' => ['nullable', 'date'],
+            'accounting_memo' => ['nullable', 'string'],
+            'memo' => ['nullable', 'string'],
+        ]);
+
+        // accounting_recorded が送られてきていればtrue 送られてきていなければ false として扱う
+        $validated['accounting_recorded'] = $request->boolean('accounting_recorded');
+
+        $expense->update($validated);
+
+        return redirect()
+            ->route('expenses.show', $expense)
+            ->with('status', '支出を更新しました');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Expense $expense)
     {
-        //
+        $expense->delete();
+
+        return redirect()
+            ->route('expenses.index')
+            ->with('status', '支出を削除しました');
     }
 }

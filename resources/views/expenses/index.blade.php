@@ -40,6 +40,7 @@
                     <th>会計記録済み</th>
                     <th>メモ</th>
                     <th>登録日時</th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,6 +57,9 @@
                         <td>{{ $expense->accounting_recorded ? '済' : '未' }}</td>
                         <td>{{ $expense->memo }}</td>
                         <td>{{ $expense->created_at }}</td>
+                        <td>
+                            <a href="{{ route('expenses.show', $expense) }}">詳細</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

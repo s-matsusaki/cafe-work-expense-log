@@ -40,6 +40,8 @@ return new class extends Migration
             $table->boolean('accounting_recorded')->default(false);
             $table->dateTime('accounting_recorded_at')->nullable();
             $table->text('accounting_memo')->nullable();
+
+            $table->text('memo')->nullable();
             
             $table->timestamps();
         });
