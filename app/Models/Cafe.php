@@ -25,4 +25,9 @@ class Cafe extends Model
     {
         return $this->hasMany(WorkSession::class);
     }
+
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(Expense::class);
+    }
 }

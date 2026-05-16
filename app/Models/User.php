@@ -28,6 +28,11 @@ class User extends Authenticatable
         return $this->hasMany(WorkSession::class);
     }
 
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(Expense::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

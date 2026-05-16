@@ -1,0 +1,99 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Cafe;
+use App\Models\Expense;
+use App\Models\WorkSession;
+use Illuminate\Http\Request;
+
+class ExpenseController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $expenses = Expense::with(['cafe', 'workSession'])
+            ->latest('expense_date')
+            ->latest()
+            ->get();
+        
+        return view('expenses.index', compact('expenses'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $cafes = Cafe::orderBy('name')->get();
+
+        $workSessions = WorkSession::with('cafe')
+            ->latest('work_date')
+            ->latest()
+            ->get();
+        
+        return view('expenses.create', compact('cafes', 'workSessions'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'expense_date' => ['required', 'date'],
+            'title' => ['required', 'string', 'max:255'],
+            'amount' => ['required', 'integer', 'min:0'],
+            'expense_type' => ['required', 'string', 'max:50'],
+            'payment_method' => ['nullable', 'string', 'max:50'],
+            'cafe_id' => ['nullable', 'exists:cafes,id'],
+            'work_session_id' => ['nullable', 'exists:work_sessions,id'],
+            'accounting_recorded' => ['nullable', 'boolean'],
+            'accounting_recorded_at' => ['nullable', 'date'],
+            'accounting_memo' => ['nullable', 'string'],
+        ]);
+
+        $validated['user_id'] = 1;
+        $validated['acounting_recorded'] = $request->boolean('acounting_recorded');
+
+        Expense::create($validated);
+
+        return redirect()
+            ->route('expenses.index')
+            ->with('status', '支出を登録しました。');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}
