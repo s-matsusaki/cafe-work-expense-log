@@ -6,8 +6,8 @@ use App\Http\Controllers\WorkSessionController;
 use App\Http\Controllers\ExpenseController;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('dashboard');
+})->name('dashboard');
 
 Route::resource('cafes', CafeController::class);
 

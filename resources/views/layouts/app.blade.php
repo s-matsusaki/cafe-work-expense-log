@@ -11,6 +11,8 @@
         <h1>カフェログ</h1>
 
         <nav>
+            <a href="{{ route('dashboard') }}">トップ</a>
+            |
             <a href="{{ route('cafes.index') }}">カフェ一覧</a>
             |
             <a href="{{ route('work-sessions.index') }}">作業記録一覧</a>
