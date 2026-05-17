@@ -5,17 +5,6 @@
 @section('content')
     <h2>支出編集</h2>
 
-    @if ($errors->any())
-        <div>
-            <p>入力内容を確認してください</p>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <form action="{{ route('expenses.update', $expense) }}" method="POST">
         @csrf
         @method('PUT')

@@ -5,17 +5,6 @@
 @section('content')
     <h2>作業記録登録</h2>
 
-    @if ($errors->any())
-        <div>
-            <p>入力内容を確認してください。</p>
-            <ul>
-                @foreach ($errors as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <form action="{{ route('work-sessions.store') }}" method="POST">
         @csrf
 

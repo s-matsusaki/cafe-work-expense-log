@@ -5,17 +5,6 @@
 @section('content')
     <h2>カフェ編集</h2>
 
-    @if ($errors->any())
-        <div>
-            <p>入力内容を確認してください。</p>
-            <ul>
-                @foreach ($errors as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <form action="{{ route('cafes.update', $cafe) }}" method="POST">
         @csrf
         @method('PUT')
