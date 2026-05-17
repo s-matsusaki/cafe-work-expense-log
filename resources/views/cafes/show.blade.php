@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>カフェ詳細</title>
-</head>
-<body>
-    <h1>カフェ詳細</h1>
+@extends('layouts.app')
+
+@section('title', 'カフェ詳細')
+
+@section('content')
+    <h2>カフェ詳細</h2>
 
     @if (session('status'))
         <p>{{ session('status') }}</p>
@@ -52,5 +48,4 @@
     <p>
         <a href="{{ route('cafes.index') }}">一覧に戻る</a>
     </p>
-</body>
-</html>
+@endsection

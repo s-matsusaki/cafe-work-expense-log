@@ -1,21 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>カフェ登録</title>
-</head>
-<body>
-    <h1>カフェ登録</h1>
-    @if ($errors->any())
-        <p>入力内容を確認してください。</p>
-        <ul>
-            @foreach ($errors->all() as $error )
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
+@extends('layouts.app')
+
+@section('title', 'カフェ登録')
+
+@section('content')
+    <h2>カフェ登録</h2>
 
     <form action="{{ route('cafes.store') }}" method="POST">
         @csrf
@@ -60,5 +48,4 @@
     <p>
         <a href="{{ route('cafes.index') }}">一覧に戻る</a>
     </p>
-</body>
-</html>
+@endsection
