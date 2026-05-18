@@ -10,15 +10,36 @@
     <header>
         <h1>カフェログ</h1>
 
-        <nav>
-            <a href="{{ route('dashboard') }}">トップ</a>
-            |
-            <a href="{{ route('cafes.index') }}">カフェ一覧</a>
-            |
-            <a href="{{ route('work-sessions.index') }}">作業記録一覧</a>
-            |
-            <a href="{{ route('expenses.index') }}">支出一覧</a>
-        </nav>
+        <div>
+            @auth
+                <p>
+                    ログイン中：{{ auth()->user()->name }}
+                </p>
+
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit">ログアウト</button>
+                </form>
+            @else
+                <p>
+                    <a href="{{ route('login') }}">ログイン</a>
+                    |
+                    <a href="{{ route('register') }}">ユーザー登録</a>
+                </p>
+            @endauth
+        </div>
+
+        @auth
+            <nav>
+                <a href="{{ route('dashboard') }}">トップ</a>
+                |
+                <a href="{{ route('cafes.index') }}">カフェ一覧</a>
+                |
+                <a href="{{ route('work-sessions.index') }}">作業記録一覧</a>
+                |
+                <a href="{{ route('expenses.index') }}">支出一覧</a>
+            </nav>
+        @endauth
     </header>
     
     @if (session('status'))

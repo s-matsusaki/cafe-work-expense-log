@@ -14,7 +14,8 @@ class WorkSessionController extends Controller
      */
     public function index(Request $request)
     {
-        $query = WorkSession::with('cafe');
+        $query = WorkSession::with('cafe')
+            ->where('user_id', auth()->id());
 
         if ($request->filled('work_month')) {
             $query->whereYear('work_date', substr($request->work_month, 0, 4))
@@ -34,9 +35,12 @@ class WorkSessionController extends Controller
             ->latest()
             ->get();
 
-        $cafes = Cafe::orderBy('name')->get();
+        $cafes = Cafe::where('user_id', auth()->id())
+            ->orderBy('name')
+            ->get();
 
         $categories = WorkSession::query()
+            ->where('user_id', auth()->id())
             ->whereNotNull('category')
             ->distinct()
             ->orderBy('category')
@@ -57,7 +61,9 @@ class WorkSessionController extends Controller
      */
     public function create()
     {
-        $cafes = Cafe::orderBy('name')->get();
+        $cafes = Cafe::where('user_id', auth()->id())
+            ->orderBy('name')
+            ->get();
 
         return view('work-sessions.create', compact('cafes'));
     }
@@ -69,9 +75,7 @@ class WorkSessionController extends Controller
     {
         $validated = $request->validated();
 
-        // TODO:あとでいかに置換
-        // $validated['user_id'] = auth()->id();
-        $validated['user_id'] = 1;
+        $validated['user_id'] = auth()->id();
 
         WorkSession::create($validated);
 
@@ -85,6 +89,8 @@ class WorkSessionController extends Controller
      */
     public function show(WorkSession $workSession)
     {
+        abort_if($workSession->user_id !== auth()->id(), 403);
+
         $workSession->load('cafe');
 
         return view('work-sessions.show', compact('workSession'));
@@ -95,7 +101,11 @@ class WorkSessionController extends Controller
      */
     public function edit(WorkSession $workSession)
     {
-        $cafes = Cafe::orderBy('name')->get();
+        abort_if($workSession->user_id !== auth()->id(), 403);
+
+        $cafes = Cafe::where('user_id', auth()->id())
+        ->orderBy('name')
+        ->get();
 
         return view('work-sessions.edit', compact('workSession', 'cafes'));
     }
@@ -105,6 +115,8 @@ class WorkSessionController extends Controller
      */
     public function update(WorkSessionRequest $request, WorkSession $workSession)
     {
+        abort_if($workSession->user_id !== auth()->id(), 403);
+
         $validated = $request->validated();
 
         $workSession->update($validated);
@@ -119,6 +131,8 @@ class WorkSessionController extends Controller
      */
     public function destroy(WorkSession $workSession)
     {
+        abort_if($workSession->user_id !== auth()->id(), 403);
+
         $workSession->delete();
 
         return redirect()

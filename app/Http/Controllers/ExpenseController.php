@@ -15,7 +15,8 @@ class ExpenseController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Expense::with(['cafe', 'workSession']);
+        $query = Expense::with(['cafe', 'workSession'])
+            ->where('user_id', auth()->id());
 
         if ($request->filled('accounting_recorded')) {
             $query->where('accounting_recorded', $request->boolean('accounting_recorded'));
@@ -52,9 +53,11 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $cafes = Cafe::orderBy('name')->get();
+        $cafes = Cafe::where('user_id', auth()->id())
+        ->orderBy('name')->get();
 
         $workSessions = WorkSession::with('cafe')
+            ->where('user_id', auth()->id())
             ->latest('work_date')
             ->latest()
             ->get();
@@ -69,7 +72,7 @@ class ExpenseController extends Controller
     {
         $validated = $request->validated();
 
-        $validated['user_id'] = 1;
+        $validated['user_id'] = auth()->id();
         $validated['acounting_recorded'] = $request->boolean('acounting_recorded');
 
         Expense::create($validated);
@@ -84,6 +87,8 @@ class ExpenseController extends Controller
      */
     public function show(Expense $expense)
     {
+        abort_if($expense->user_id !== auth()->id(), 403);
+
         $expense->load(['cafe', 'workSession']);
 
         return view('expenses.show', compact('expense'));
@@ -94,9 +99,13 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        $cafes = Cafe::orderBy('name')->get();
+        abort_if($expense->user_id !== auth()->id(), 403);
+
+        $cafes = Cafe::where('user_id', auth()->id())
+        ->orderBy('name')->get();
 
         $workSessions = WorkSession::with('cafe')
+            ->where('user_id', auth()->id())
             ->latest('work_date')
             ->latest()
             ->get();
@@ -109,6 +118,8 @@ class ExpenseController extends Controller
      */
     public function update(ExpenseRequest $request, Expense $expense)
     {
+        abort_if($expense->user_id !== auth()->id(), 403);
+
         $validated = $request->validated();
 
         // accounting_recorded が送られてきていればtrue 送られてきていなければ false として扱う
@@ -127,6 +138,8 @@ class ExpenseController extends Controller
      */
     public function destroy(Expense $expense)
     {
+        abort_if($expense->user_id !== auth()->id(), 403);
+
         $expense->delete();
 
         return redirect()

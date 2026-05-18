@@ -13,7 +13,8 @@ class CafeController extends Controller
      */
     public function index()
     {
-        $cafes = Cafe::latest()->get();
+        $cafes = Cafe::where('user_id', auth()->id())
+        ->latest()->get();
 
         return view('cafes.index',compact('cafes'));
     }
@@ -34,8 +35,7 @@ class CafeController extends Controller
         $validated = $request->validated();
 
         // あとで以下に変更
-        // $validated['user_id] = $auth->id();
-        $validated['user_id'] = 1;
+        $validated['user_id'] = auth()->id();
 
         Cafe::create($validated);
 
@@ -49,6 +49,8 @@ class CafeController extends Controller
      */
     public function show(Cafe $cafe)
     {
+        abort_if($cafe->user_id !== auth()->id(), 403);
+
         return view('cafes.show', compact('cafe'));
     }
 
@@ -57,6 +59,8 @@ class CafeController extends Controller
      */
     public function edit(Cafe $cafe)
     {
+        abort_if($cafe->user_id !== auth()->id(), 403);
+
         return view('cafes.edit', compact('cafe'));
     }
 
@@ -65,6 +69,8 @@ class CafeController extends Controller
      */
     public function update(CafeRequest $request, Cafe $cafe)
     {
+        abort_if($cafe->user_id !== auth()->id(), 403);
+
         $validated = $request->validated();
 
         $cafe->update($validated);
@@ -79,6 +85,8 @@ class CafeController extends Controller
      */
     public function destroy(Cafe $cafe)
     {
+        abort_if($cafe->user_id !== auth()->id(), 403);
+
         $cafe->delete();
 
         return redirect()
