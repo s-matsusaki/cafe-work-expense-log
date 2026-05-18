@@ -70,12 +70,6 @@
 
     <hr>
 
-    <p>
-        <a href="{{ route('cafes.index') }}">カフェ一覧へ</a>
-        |
-        <a href="{{ route('work-sessions.index') }}">作業記録一覧へ</a>
-    </p>
-
     @if ($expenses->isEmpty())
         <p>登録されている支出はありません</p>
     @else

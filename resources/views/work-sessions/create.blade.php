@@ -28,22 +28,15 @@
             >
         </div>
 
-        <div>
-            <label for="cafe_id">カフェ</label><br>
-            <select name="cafe_id" id="cafe_id">
-                <option value="">未選択</option>
-                @foreach ($cafes as $cafe)
-                    <option value="{{ $cafe->id }}"
-                        @selected((string) old('cafe_id') === (string) $cafe->id)
-                    >
-                        {{ $cafe->name }}
-                        @if ($cafe->nearest_station)
-                            （{{ $cafe->nearest_station }}）
-                        @endif
-                    </option>
-                @endforeach
-            </select>
-        </div>
+        @include('partials.cafe-select', [
+            'label' => 'カフェ',
+            'cafes' => $cafes,
+            'name' => 'cafe_id',
+            'id' => 'cafe_id',
+            'emptyLabel' => '未選択',
+            'selectedCafeId' => old('cafe_id'),
+            'showBreak' => true,
+        ])
 
         <div>
             <label for="work_minutes">作業時間（分）</label><br>

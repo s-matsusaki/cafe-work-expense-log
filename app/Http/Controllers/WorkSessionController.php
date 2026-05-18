@@ -11,14 +11,44 @@ class WorkSessionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $workSessions = WorkSession::with('cafe')
+        $query = WorkSession::with('cafe');
+
+        if ($request->filled('work_month')) {
+            $query->whereYear('work_date', substr($request->work_month, 0, 4))
+                ->whereMonth('work_date', substr($request->work_month, 5, 2));
+        }
+
+        if ($request->filled('cafe_id')) {
+            $query->where('cafe_id', $request->cafe_id);
+        }
+
+        if($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        $workSessions = $query
             ->latest('work_date')
             ->latest()
             ->get();
 
-        return view('work-sessions.index', compact('workSessions'));
+        $cafes = Cafe::orderBy('name')->get();
+
+        $categories = WorkSession::query()
+            ->whereNotNull('category')
+            ->distinct()
+            ->orderBy('category')
+            ->pluck('category');
+
+        $totalWorkMinutes = $workSessions->sum('work_minutes');
+
+        return view('work-sessions.index', compact(
+            'workSessions',
+            'cafes',
+            'categories',
+            'totalWorkMinutes',
+        ));
     }
 
     /**
