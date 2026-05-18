@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cafe;
 use Illuminate\Http\Request;
+use App\Http\Requests\CafeRequest;
 
 class CafeController extends Controller
 {
@@ -28,14 +29,9 @@ class CafeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CafeRequest $request)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'nearest_station' => ['nullable', 'string', 'max:255'],
-            'memo' => ['nullable', 'string'],
-        ]);
+        $validated = $request->validated();
 
         // あとで以下に変更
         // $validated['user_id] = $auth->id();
@@ -67,14 +63,9 @@ class CafeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cafe $cafe)
+    public function update(CafeRequest $request, Cafe $cafe)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'nearest_station' => ['nullable', 'string', 'max:255'],
-            'memo' => ['nullable', 'string'],
-        ]);
+        $validated = $request->validated();
 
         $cafe->update($validated);
 

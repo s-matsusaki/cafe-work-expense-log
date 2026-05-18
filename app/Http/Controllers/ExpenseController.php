@@ -6,6 +6,7 @@ use App\Models\Cafe;
 use App\Models\Expense;
 use App\Models\WorkSession;
 use Illuminate\Http\Request;
+use App\Http\Requests\ExpenseRequest;
 
 class ExpenseController extends Controller
 {
@@ -64,20 +65,9 @@ class ExpenseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ExpenseRequest $request)
     {
-        $validated = $request->validate([
-            'expense_date' => ['required', 'date'],
-            'title' => ['required', 'string', 'max:255'],
-            'amount' => ['required', 'integer', 'min:0'],
-            'expense_type' => ['required', 'string', 'max:50'],
-            'payment_method' => ['nullable', 'string', 'max:50'],
-            'cafe_id' => ['nullable', 'exists:cafes,id'],
-            'work_session_id' => ['nullable', 'exists:work_sessions,id'],
-            'accounting_recorded' => ['nullable', 'boolean'],
-            'accounting_recorded_at' => ['nullable', 'date'],
-            'accounting_memo' => ['nullable', 'string'],
-        ]);
+        $validated = $request->validated();
 
         $validated['user_id'] = 1;
         $validated['acounting_recorded'] = $request->boolean('acounting_recorded');
@@ -117,21 +107,9 @@ class ExpenseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Expense $expense)
+    public function update(ExpenseRequest $request, Expense $expense)
     {
-        $validated = $request->validate([
-            'expense_date' => ['required', 'date'],
-            'title' => ['required', 'string', 'max:255'],
-            'amount' => ['required', 'integer', 'min:0'],
-            'expense_type' => ['required', 'string', 'max:50'],
-            'payment_method' => ['nullable', 'string', 'max:50'],
-            'cafe_id' => ['nullable', 'exists:cafes,id'],
-            'work_session_id' => ['nullable', 'exists:work_sessions,id'],
-            'accounting_recorded' => ['nullable', 'boolean'],
-            'accounting_recorded_at' => ['nullable', 'date'],
-            'accounting_memo' => ['nullable', 'string'],
-            'memo' => ['nullable', 'string'],
-        ]);
+        $validated = $request->validated();
 
         // accounting_recorded が送られてきていればtrue 送られてきていなければ false として扱う
         $validated['accounting_recorded'] = $request->boolean('accounting_recorded');

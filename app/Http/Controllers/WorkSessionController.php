@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\WorkSession;
 use App\Models\Cafe;
+use App\Http\Requests\WorkSessionRequest;
 
 class WorkSessionController extends Controller
 {
@@ -64,16 +65,9 @@ class WorkSessionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(WorkSessionRequest $request)
     {
-        $validated = $request->validate([
-            'cafe_id' => ['nullable', 'exists:cafes,id'],
-            'work_date' => ['required', 'date'],
-            'title' => ['required', 'string', 'max:255'],
-            'work_minutes' => ['nullable', 'integer', 'min:0'],
-            'category' => ['nullable', 'string', 'max:50'],
-            'memo' => ['nullable', 'string'],
-        ]);
+        $validated = $request->validated();
 
         // TODO:あとでいかに置換
         // $validated['user_id'] = auth()->id();
@@ -109,16 +103,9 @@ class WorkSessionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, WorkSession $workSession)
+    public function update(WorkSessionRequest $request, WorkSession $workSession)
     {
-        $validated = $request->validate([
-            'cafe_id' => ['nullable', 'exists:cafes,id'],
-            'work_date' => ['required', 'date'],
-            'title' => ['required', 'string', 'max:255'],
-            'work_minutes' => ['nullable', 'integer', 'min:0'],
-            'category' => ['nullable', 'string', 'max:50'],
-            'memo' => ['nullable', 'string'],
-        ]);
+        $validated = $request->validated();
 
         $workSession->update($validated);
 
