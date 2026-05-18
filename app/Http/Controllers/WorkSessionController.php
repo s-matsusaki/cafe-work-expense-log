@@ -89,7 +89,7 @@ class WorkSessionController extends Controller
      */
     public function show(WorkSession $workSession)
     {
-        abort_if($workSession->user_id !== auth()->id(), 403);
+        $this->authorize('view', $workSession);
 
         $workSession->load('cafe');
 
@@ -101,7 +101,7 @@ class WorkSessionController extends Controller
      */
     public function edit(WorkSession $workSession)
     {
-        abort_if($workSession->user_id !== auth()->id(), 403);
+        $this->authorize('update', $workSession);
 
         $cafes = Cafe::where('user_id', auth()->id())
         ->orderBy('name')
@@ -115,7 +115,7 @@ class WorkSessionController extends Controller
      */
     public function update(WorkSessionRequest $request, WorkSession $workSession)
     {
-        abort_if($workSession->user_id !== auth()->id(), 403);
+        $this->authorize('update', $workSession);
 
         $validated = $request->validated();
 
@@ -131,7 +131,7 @@ class WorkSessionController extends Controller
      */
     public function destroy(WorkSession $workSession)
     {
-        abort_if($workSession->user_id !== auth()->id(), 403);
+        $this->authorize('delete', $workSession);
 
         $workSession->delete();
 

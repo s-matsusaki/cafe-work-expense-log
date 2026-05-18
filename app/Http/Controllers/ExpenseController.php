@@ -87,7 +87,7 @@ class ExpenseController extends Controller
      */
     public function show(Expense $expense)
     {
-        abort_if($expense->user_id !== auth()->id(), 403);
+        $this->authorize('view', $expense);
 
         $expense->load(['cafe', 'workSession']);
 
@@ -99,7 +99,7 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        abort_if($expense->user_id !== auth()->id(), 403);
+        $this->authorize('update', $expense);
 
         $cafes = Cafe::where('user_id', auth()->id())
         ->orderBy('name')->get();
@@ -118,7 +118,7 @@ class ExpenseController extends Controller
      */
     public function update(ExpenseRequest $request, Expense $expense)
     {
-        abort_if($expense->user_id !== auth()->id(), 403);
+        $this->authorize('update', $expense);
 
         $validated = $request->validated();
 
@@ -138,7 +138,7 @@ class ExpenseController extends Controller
      */
     public function destroy(Expense $expense)
     {
-        abort_if($expense->user_id !== auth()->id(), 403);
+        $this->authorize('delete', $expense);
 
         $expense->delete();
 

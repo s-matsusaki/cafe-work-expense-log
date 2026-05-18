@@ -49,7 +49,7 @@ class CafeController extends Controller
      */
     public function show(Cafe $cafe)
     {
-        abort_if($cafe->user_id !== auth()->id(), 403);
+        $this->authorize('view', $cafe);
 
         return view('cafes.show', compact('cafe'));
     }
@@ -59,7 +59,7 @@ class CafeController extends Controller
      */
     public function edit(Cafe $cafe)
     {
-        abort_if($cafe->user_id !== auth()->id(), 403);
+        $this->authorize('update', $cafe);
 
         return view('cafes.edit', compact('cafe'));
     }
@@ -69,7 +69,7 @@ class CafeController extends Controller
      */
     public function update(CafeRequest $request, Cafe $cafe)
     {
-        abort_if($cafe->user_id !== auth()->id(), 403);
+        $this->authorize('update', $cafe);
 
         $validated = $request->validated();
 
@@ -85,7 +85,7 @@ class CafeController extends Controller
      */
     public function destroy(Cafe $cafe)
     {
-        abort_if($cafe->user_id !== auth()->id(), 403);
+        $this->authorize('delete', $cafe);
 
         $cafe->delete();
 
