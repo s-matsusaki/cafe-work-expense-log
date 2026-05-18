@@ -40,17 +40,14 @@
             >
         </div>
 
-        <div>
-            <label for="expense_type">支出種別</label><br>
-            <select name="expense_type" id="expense_type">
-                <option value="">選択してください</option>
-                <option value="cafe" @selected(old('expense_type') === 'cafe')>カフェ代</option>
-                <option value="book" @selected(old('expense_type') === 'book')>書籍代</option>
-                <option value="saas" @selected(old('expense_type') === 'saas')>SaaS代</option>
-                <option value="transport" @selected(old('expense_type') === 'transport')>交通費</option>
-                <option value="other" @selected(old('expense_type') === 'other')>その他</option>
-            </select>
-        </div>
+        @include('expenses.partials.expense-type-select', [
+            'name' => 'expense_type',
+            'id' => 'expense_type',
+            'label' => '支出種別',
+            'selected' => old('expense_type'),
+            'showAllOption' => false,
+            'showBreak' => true,
+        ])
 
         <div>
             <label for="payment_method">支払方法</label><br>

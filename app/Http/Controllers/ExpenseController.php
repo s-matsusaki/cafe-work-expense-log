@@ -12,13 +12,28 @@ class ExpenseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $expenses = Expense::with(['cafe', 'workSession'])
+        $query = Expense::with(['cafe', 'workSession']);
+
+        if ($request->filled('accounting_recorded')) {
+            $query->where('accounting_recorded', $request->boolean('accounting_recorded'));
+        }
+
+        if ($request->filled('expense_month')) {
+            $query->whereYear('expense_date', substr($request->expense_month, 0, 4))
+            ->whereMonth('expense_date', substr($request->expense_month, 5, 2));
+        }
+
+        if ($request->filled('expense_type')) {
+            $query->where('expense_type', $request->expense_type);
+        }
+        
+        $expenses = $query
             ->latest('expense_date')
             ->latest()
             ->get();
-        
+
         return view('expenses.index', compact('expenses'));
     }
 
