@@ -49,6 +49,27 @@
         </div>
     </form>
 
+    <section>
+        <h3>集計</h3>
+
+        <p>
+            表示中の支出合計：
+            <strong>{{ number_format($totalAmount) }}円</strong>
+
+            <p>
+                会計ソフト記録済み：
+                {{ $recordedCount }}件
+            </p>
+
+            <p>
+                会計ソフト未記載：
+                {{ $unrecordedCount }}件
+            </p>
+        </p>
+    </section>
+
+    <hr>
+
     <p>
         <a href="{{ route('cafes.index') }}">カフェ一覧へ</a>
         |

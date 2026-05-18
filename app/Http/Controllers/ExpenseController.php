@@ -33,8 +33,17 @@ class ExpenseController extends Controller
             ->latest('expense_date')
             ->latest()
             ->get();
+        
+        $totalAmount = $expenses->sum('amount');
+        $unrecordedCount = $expenses->where('accounting_recorded', false)->count();
+        $recordedCount = $expenses->where('accounting_recorded', true)->count();
 
-        return view('expenses.index', compact('expenses'));
+        return view('expenses.index', compact(
+            'expenses',
+            'totalAmount',
+            'unrecordedCount',
+            'recordedCount',
+        ));
     }
 
     /**
