@@ -7,6 +7,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\BookController;
 
 Route::middleware('guest')->group(function() {
     Route::get('/register', [RegisteredUserController::class, 'create'])
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('cafes', CafeController::class);
     Route::resource('work-sessions', WorkSessionController::class);
     Route::resource('expenses', ExpenseController::class);
+    Route::resource('books', BookController::class);
 });
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])

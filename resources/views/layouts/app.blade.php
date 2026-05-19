@@ -37,6 +37,8 @@
                 |
                 <a href="{{ route('work-sessions.index') }}">作業記録一覧</a>
                 |
+                <a href="{{ route('books.index') }}">書籍一覧</a>
+                |
                 <a href="{{ route('expenses.index') }}">支出一覧</a>
             </nav>
         @endauth
