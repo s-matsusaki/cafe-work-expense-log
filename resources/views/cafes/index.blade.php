@@ -6,7 +6,7 @@
     <h2>カフェ一覧</h2>
 
     <p>
-        <a href="{{ route('cafes.create') }}">カフェを登録する</a>
+        <a href="{{ route('cafes.create') }}" class="button-link">カフェを登録する</a>
     </p>
 
     @if ($cafes->isEmpty())

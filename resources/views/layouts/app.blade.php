@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <title>@yield('title', 'カフェログ')</title>
 </head>
 <body>
@@ -12,14 +13,11 @@
 
         <div>
             @auth
-                <p>
-                    ログイン中：{{ auth()->user()->name }}
-                </p>
-
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
+                    <span>ログイン中：{{ auth()->user()->name }}</span>
                     <button type="submit">ログアウト</button>
-                </form>
+                </form>        
             @else
                 <p>
                     <a href="{{ route('login') }}">ログイン</a>
@@ -31,25 +29,27 @@
 
         @auth
             <nav>
-                <a href="{{ route('dashboard') }}">トップ</a>
+                <a href="{{ route('dashboard') }}" class="button-link">トップ</a>
                 |
-                <a href="{{ route('cafes.index') }}">カフェ一覧</a>
+                <a href="{{ route('cafes.index') }}" class="button-link">カフェ一覧</a>
                 |
-                <a href="{{ route('work-sessions.index') }}">作業記録一覧</a>
+                <a href="{{ route('work-sessions.index') }}" class="button-link">作業記録一覧</a>
                 |
-                <a href="{{ route('books.index') }}">書籍一覧</a>
+                <a href="{{ route('books.index') }}" class="button-link">書籍一覧</a>
                 |
-                <a href="{{ route('expenses.index') }}">支出一覧</a>
+                <a href="{{ route('expenses.index') }}" class="button-link">支出一覧</a>
             </nav>
         @endauth
     </header>
     
     @if (session('status'))
-        <p>{{ session('status') }}</p>
+        <div class="status-message">
+            {{ session('status') }}
+        </div>
     @endif
 
     @if ($errors->any())
-        <div>
+        <div class="error-message">
             <p>入力内容を確認してください</p>
             <ul>
                 @foreach ($errors->all() as $error)

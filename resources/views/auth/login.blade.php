@@ -34,6 +34,6 @@
 
     <p>
         アカウントがない場合：
-        <a href="{{ route('register') }}">ユーザー登録</a>
+        <a href="{{ route('register') }}" class="button-link">ユーザー登録</a>
     </p>
 @endsection

@@ -51,10 +51,10 @@
     </form>
 
     <p>
-        <a href="{{ route('books.show', $book) }}">詳細に戻る</a>
+        <a href="{{ route('books.show', $book) }}" class="button-link">詳細に戻る</a>
     </p>
 
     <p>
-        <a href="{{ route('books.index') }}">一覧に戻る</a>
+        <a href="{{ route('books.index') }}" class="button-link">一覧に戻る</a>
     </p>
 @endsection

@@ -10,7 +10,7 @@
     @endif
 
     <p>
-        <a href="{{ route('work-sessions.create') }}">作業記録を登録する</a>
+        <a href="{{ route('work-sessions.create') }}" class="button-link">作業記録を登録する</a>
     </p>
 
     <form action="{{ route('work-sessions.index') }}" method="GET">

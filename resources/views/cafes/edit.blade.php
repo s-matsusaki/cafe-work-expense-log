@@ -55,6 +55,6 @@
     </p>
 
     <p>
-        <a href="{{ route('cafes.index') }}">一覧に戻る</a>
+        <a href="{{ route('cafes.index') }}" class="button-link">一覧に戻る</a>
     </p>
 @endsection

@@ -70,6 +70,6 @@
     </form>
 
     <p>
-        <a href="{{ route('expenses.index') }}">一覧に戻る</a>
+        <a href="{{ route('expenses.index') }}" class="button-link">一覧に戻る</a>
     </p>
 @endsection

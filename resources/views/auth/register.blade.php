@@ -52,7 +52,7 @@
 
         <p>
             すでにアカウントがある場合：
-            <a href="{{ route('login') }}">ログイン</a>
+            <a href="{{ route('login') }}" class="button-link">ログイン</a>
         </p>
     </form>
 @endsection

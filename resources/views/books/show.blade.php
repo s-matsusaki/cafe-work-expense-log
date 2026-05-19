@@ -42,6 +42,6 @@
     </form>
 
     <p>
-        <a href="{{ route('books.index') }}">一覧に戻る</a>
+        <a href="{{ route('books.index') }}" class="button-link">一覧に戻る</a>
     </p>
 @endsection

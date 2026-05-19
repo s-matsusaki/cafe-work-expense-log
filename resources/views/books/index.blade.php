@@ -6,7 +6,7 @@
     <h2>書籍一覧</h2>
 
     <p>
-        <a href="{{ route('books.create') }}">書籍を登録する</a>
+        <a href="{{ route('books.create') }}" class="button-link">書籍を登録する</a>
     </p>
 
     @if ($books->isEmpty())

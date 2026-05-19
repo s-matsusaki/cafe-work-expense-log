@@ -10,7 +10,7 @@
     @endif
 
     <p>
-        <a href="{{ route('expenses.create') }}">支出を登録する</a>
+        <a href="{{ route('expenses.create') }}" class="button-link">支出を登録する</a>
     </p>
 
     <form action="{{ route('expenses.index') }}" method="GET">

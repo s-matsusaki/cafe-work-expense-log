@@ -57,7 +57,7 @@
         </form>
 
         <p>
-            <a href="{{ route('work-sessions.index') }}">一覧に戻る</a>
+            <a href="{{ route('work-sessions.index') }}" class="button-link">一覧に戻る</a>
         </p>
     </dl>
 @endsection
