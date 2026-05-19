@@ -34,7 +34,7 @@
             <small>例：2026-05</small>
         </div>
 
-        @include('expenses.partials.expense-type-select', [
+        @include('partials.expense-type-select', [
             'name' => 'expense_type',
             'id' => 'expense_type',
             'label' => '支出種別',
@@ -83,6 +83,7 @@
                     <th>種別</th>
                     <th>支払方法</th>
                     <th>カフェ</th>
+                    <th>書籍</th>
                     <th>作業記録</th>
                     <th>会計記録済み</th>
                     <th>メモ</th>
@@ -100,6 +101,7 @@
                         <td>{{ $expense->expense_type }}</td>
                         <td>{{ $expense->payment_method ?? '未入力'}}</td>
                         <td>{{ $expense->cafe?->name ?? '未設定' }}</td>
+                        <td>{{ $expense->book?->title ?? '未設定' }}</td>
                         <td>{{ $expense->workSession?->title ?? '未設定' }}</td>
                         <td>{{ $expense->accounting_recorded ? '済' : '未' }}</td>
                         <td>{{ $expense->memo }}</td>

@@ -14,6 +14,7 @@ class Expense extends Model
         'user_id',
         'work_session_id',
         'cafe_id',
+        'book_id',
         'expense_date',
         'title',
         'amount',
@@ -44,5 +45,10 @@ class Expense extends Model
     public function cafe(): BelongsTo
     {
         return $this->belongsTo(Cafe::class);
+    }
+
+    public function book(): BelongsTo
+    {
+        return $this->belongsTo(Book::class);
     }
 }

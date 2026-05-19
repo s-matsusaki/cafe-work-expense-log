@@ -40,7 +40,7 @@
             >
         </div>
 
-        @include('expenses.partials.expense-type-select', [
+        @include('partials.expense-type-select', [
             'name' => 'expense_type',
             'id' => 'expense_type',
             'label' => '支出種別',
@@ -68,6 +68,11 @@
             'emptyLabel' => '未選択',
             'selectedCafeId' => old('cafe_id'),
             'showBreak' => true,
+        ])
+
+        @include('partials.book-select', [
+            'books' => $books,
+            'selectedBookId' => $expense->book_id,
         ])
 
         <div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cafe;
 use App\Models\Expense;
 use App\Models\WorkSession;
+use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Requests\ExpenseRequest;
 
@@ -15,7 +16,7 @@ class ExpenseController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Expense::with(['cafe', 'workSession'])
+        $query = Expense::with(['cafe', 'workSession', 'book'])
             ->where('user_id', auth()->id());
 
         if ($request->filled('accounting_recorded')) {
@@ -61,8 +62,12 @@ class ExpenseController extends Controller
             ->latest('work_date')
             ->latest()
             ->get();
+
+        $books = Book::where('user_id', auth()->id())
+            ->latest()
+            ->get();
         
-        return view('expenses.create', compact('cafes', 'workSessions'));
+        return view('expenses.create', compact('cafes', 'workSessions', 'books'));
     }
 
     /**
@@ -89,7 +94,7 @@ class ExpenseController extends Controller
     {
         $this->authorize('view', $expense);
 
-        $expense->load(['cafe', 'workSession']);
+        $expense->load(['cafe', 'workSession', 'book']);
 
         return view('expenses.show', compact('expense'));
     }
@@ -110,7 +115,11 @@ class ExpenseController extends Controller
             ->latest()
             ->get();
 
-        return view('expenses.edit', compact('expense', 'cafes', 'workSessions'));
+        $books = Book::where('user_id', auth()->id())
+            ->latest()
+            ->get();
+
+        return view('expenses.edit', compact('expense', 'cafes', 'workSessions', 'books'));
     }
 
     /**

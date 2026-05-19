@@ -31,6 +31,9 @@
         <dt>関連カフェ</dt>
         <dd>{{ $expense->cafe?->name ?? '未設定' }}</dd>
 
+        <dt>関連書籍</dt>
+        <dd>{{ $expense->book?->title ?? '未設定' }}</dd>
+
         <dt>関連作業記録</dt>
         <dd>{{ $expense->workSession?->title ?? '未設定' }}</dd>
 
