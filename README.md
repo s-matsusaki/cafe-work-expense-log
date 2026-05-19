@@ -127,3 +127,19 @@ docker compose exec php php artisan migrate
 http://localhost:8080
 
 表示できれば、Docker開発環境の構築は完了です。
+
+### テスト用データベース
+
+開発用DBとは別に、テスト用DB `cafe_work_record_testing` を用意しています。
+
+docker compose exec postgres psql -U laravel -d cafe_work_record
+
+CREATE DATABASE cafe_work_record_testing;
+\q
+
+touch .env.testing
+
+docker compose exec php php artisan key:generate --env=testing
+docker compose exec php php artisan config:clear
+docker compose exec php php artisan migrate --env=testing
+docker compose exec php php artisan test
