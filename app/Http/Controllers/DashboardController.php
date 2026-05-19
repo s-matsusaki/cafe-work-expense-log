@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Expense;
 use App\Models\WorkSession;
+use App\Models\Book;
 use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
@@ -44,6 +45,22 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
+        $readingBookCount = Book::query()
+            ->where('user_id', auth()->id())
+            ->where('status', 'reading')
+            ->count();
+
+        $unreadBookCount = Book::query()
+            ->where('user_id', auth()->id())
+            ->where('status', 'unread')
+            ->count();
+
+        $recentBooks = Book::query()
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->limit(5)
+            ->get();
+
         return view('dashboard', compact(
             'currentMonth',
             'monthlyWorkMinutes',
@@ -51,6 +68,9 @@ class DashboardController extends Controller
             'unrecordedExpenseCount',
             'recentWorkSessions',
             'recentExpenses',
+            'readingBookCount',
+            'unreadBookCount',
+            'recentBooks',
         ));
     }
 }

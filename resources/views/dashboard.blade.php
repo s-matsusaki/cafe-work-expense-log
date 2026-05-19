@@ -28,6 +28,16 @@
                 会計ソフト未記録の支出：
                 <strong>{{ $unrecordedExpenseCount }}件</strong>
             </li>
+
+            <li>
+                読書中の書籍：
+                <strong>{{ $readingBookCount }}冊</strong>
+            </li>
+
+            <li>
+                未読の書籍：
+                <strong>{{ $unreadBookCount }}冊</strong>
+            </li>
         </ul>
     </section>
 
@@ -42,6 +52,9 @@
             </li>
             <li>
                 <a href="{{ route('work-sessions.index') }}">作業記録一覧</a>
+            </li>
+            <li>
+                <a href="{{ route('books.index') }}">書籍一覧</a>
             </li>
             <li>
                 <a href="{{ route('expenses.index') }}">支出一覧</a>
@@ -119,6 +132,39 @@
                             <td>{{ $expense->accounting_recorded ? '済' : '未' }}</td>
                             <td>
                                 <a href="{{ route('expenses.show', $expense) }}">詳細</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+    </section>
+
+    <hr>
+
+    <section>
+        <h3>直近の書籍</h3>
+
+        @if ($recentBooks->isEmpty())
+            <p>書籍記録はまだありません。</p>
+        @else
+            <table border="1" cellpadding="8">
+                <thead>
+                    <tr>
+                        <th>タイトル</th>
+                        <th>購入日</th>
+                        <th>状態</th>
+                        <th>詳細</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($recentBooks as $book)
+                        <tr>
+                            <td>{{ $book->title }}</td>
+                            <td>{{ $book->purchased_on?->format('Y-m-d') ?? '未入力' }}</td>
+                            <td>{{ $book->status ?? '未入力' }}</td>
+                            <td>
+                                <a href="{{ route('books.show', $book) }}">詳細</a>
                             </td>
                         </tr>
                     @endforeach
