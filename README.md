@@ -1,145 +1,175 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# カフェログ
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+カフェでの作業記録、支出記録、会計ソフトへの記録状況を管理するためのWebアプリケーションです。
 
-# cafe-work-expense-log
-フリーランス活動に伴うカフェ利用費、学習書籍、作業記録、画像を管理するLaravelアプリ
+個人事業主・フリーランスとしての活動を想定し、作業時間やカフェ利用、経費記録を一元管理することで、日々の作業振り返りや確定申告準備を補助することを目的としています。
+
+## 開発目的
+
+このアプリは、以下を目的として開発しています。
+
+- カフェでの作業内容・作業時間を記録する
+- カフェ代や関連支出を記録する
+- 会計ソフトに記録済みかどうかを管理する
+- 月別・種別ごとの支出や作業時間を確認する
+- Laravelを用いた実務的なCRUD、認証、認可、テスト実装の学習・ポートフォリオ化
 
 ## 使用技術
-Laravel
-PHP-FPM
+
+区分:技術
+バックエンド:PHP / Laravel
+フロントエンド:Blade
+データベース:PostgreSQL
+Webサーバー:nginx
+実行環境:Docker / Docker Compose
+テスト:PHPUnit / Laravel Feature Test
+DB確認:DBeaver
+
+## 機能一覧
+
+### 認証機能
+
+- ユーザー登録
+- ログイン
+- ログアウト
+- ログインユーザーごとのデータ分離
+
+### カフェ管理
+
+- カフェ一覧
+- カフェ登録
+- カフェ詳細
+- カフェ編集
+- カフェ削除
+
+### 作業記録管理
+
+- 作業記録一覧
+- 作業記録登録
+- 作業記録詳細
+- 作業記録編集
+- 作業記録削除
+- 作業月での絞り込み
+- カフェでの絞り込み
+- カテゴリでの絞り込み
+- 表示中の作業時間合計
+- 時間換算表示
+
+### 支出管理
+
+- 支出一覧
+- 支出登録
+- 支出詳細
+- 支出編集
+- 支出削除
+- 会計ソフト記録済み / 未記録での絞り込み
+- 支出月での絞り込み
+- 支出種別での絞り込み
+- 表示中の支出合計
+- 会計記録済み件数
+- 会計未記録件数
+
+### ダッシュボード
+
+- 今月の作業時間合計
+- 今月の支出合計
+- 会計ソフト未記録の支出件数
+- 直近の作業記録
+- 直近の支出
+
+## DB設計概要
+
+現在の主要テーブルは以下です。
+
+テーブル:役割
+users:ユーザー情報
+cafes:作業場所としてのカフェ情報
+work_sessions:作業記録
+expenses:支出記録
+
+### リレーション概要
+
+- User は複数の Cafe を持つ
+- User は複数の WorkSession を持つ
+- User は複数の Expense を持つ
+- Cafe は複数の WorkSession を持つ
+- Cafe は複数の Expense を持つ
+- WorkSession は Cafe に紐づく
+- WorkSession は複数の Expense を持つ
+- Expense は Cafe / WorkSession に任意で紐づく
+
+
+### Dockerによる開発環境構築
+
+ローカル開発環境では Docker Compose を使用し、以下の構成で環境を構築しています。
+
+ブラウザ
+↓
 nginx
+↓
+PHP-FPM
+↓
+Laravel
+↓
 PostgreSQL
-Docker / Docker Compose
 
-## 初回セットアップ
+## 環境構築手順
 
-### Laravelプロジェクトの作成
+### リポジトリをクローン
+git clone git@github.com:s-matsusaki/cafe-work-expense-log.git
+cd リポジトリ名
 
-Mac（PC）本体にComposerをインストールせず、Docker上のComposerを使ってLaravelプロジェクトを作成します。
+### Dockerコンテナをビルド・起動
+docker compose up -d --build
 
-cd (プロジェクトを作成するディレクトリ)
-docker run --rm \
-  -v "$PWD":/app \
-  -w /app \
-  composer:2 \
-  composer create-project laravel/laravel temp-laravel
-
-以下のようなディレクトリになる
-現在のディレクトリ/
-├── .git
-├── .gitignore
-├── .DS_Store
-└── temp-laravel/
-    ├── app/
-    ├── artisan
-    ├── composer.json
-    ├── .env
-    └── ...
-
-github作成の.gitignoreとlaravel作成の.gitignoreが競合するので、laravel側の.gitignoreにマージする
-
-Laravelの中身をリポジトリ直下にコピーします。
-cp -R temp-laravel/. .
-
-一時フォルダを削除します。
-rm -rf temp-laravel
-
-### PHP-FPMコンテナの作成
-Laravelを実行するPHPコンテナを作成するため、以下のDockerfileを用意します。
-
-docker/php/Dockerfile
-
-PHP-FPMを使用することで、nginxからPHP処理を受け取り、Laravelアプリケーションを実行します。
-
-### nginx設定の作成
-Laravel用のnginx設定ファイルを作成します。
-
-docker/nginx/default.conf
-
-Laravelでは、Web公開ディレクトリをプロジェクト直下ではなく public/ にする必要があります。
-
-そのため、nginxの root は以下を参照するように設定しています。
-
-/var/www/html/public
-
-これにより、.env や app/ など、直接公開すべきではないファイルやディレクトリがWebから参照されないようにしています。
-
-### PostgreSQLコンテナの作成
-開発用データベースとして、PostgreSQLコンテナを使用します。
-
-compose.yaml では、PostgreSQLのデータをDocker volumeに保存するようにしています。
-
-volumes:
-  postgres-data:
-
-これにより、コンテナを停止・削除しても、volumeを削除しない限りDBデータは保持されます。
-
-### .env のPostgreSQL設定
-Laravelの .env をPostgreSQL用に設定します。
-
+### .env を作成・設定
 DB_CONNECTION=pgsql
 DB_HOST=postgres
 DB_PORT=5432
 DB_DATABASE=cafe_work_record
 DB_USERNAME=laravel
-DB_PASSWORD=secret
-
-DB_HOST=postgres は、compose.yaml で定義しているPostgreSQLサービス名です。
-
-Docker Compose内では、サービス名をホスト名として利用できます。
-
-### Docker Composeで起動
-以下のコマンドで、Dockerコンテナをビルドして起動します。
-
-docker compose up -d --build
-
-起動後、コンテナの状態を確認します。
-
-docker compose ps
-
-以下のコンテナが起動していればOKです。
-
-nginx
-php
-postgres
+DB_PASSWORD=xxxxxxxx
 
 ### マイグレーション実行
-
-DB接続確認を兼ねて、Laravelのマイグレーションを実行します。
-
-PHPコンテナ内でLaravelのマイグレーションを実行します。
-
 docker compose exec php php artisan migrate
 
-1つ目の php は、compose.yaml に定義したサービス名です。
-
-2つ目の php は、コンテナ内で実行するPHPコマンドです。
-
-### ブラウザで表示確認
-以下にアクセスして、Laravelの初期画面が表示されることを確認します。
-
+### アプリにアクセス
 http://localhost:8080
 
-表示できれば、Docker開発環境の構築は完了です。
-
-### テスト用データベース
-
-開発用DBとは別に、テスト用DB `cafe_work_record_testing` を用意しています。
-
+### テスト用DB作成
 docker compose exec postgres psql -U laravel -d cafe_work_record
 
 CREATE DATABASE cafe_work_record_testing;
+
 \q
 
-touch .env.testing
+### .env.testing を作成し、テスト用DBを指定。
+APP_ENV=testing
 
+DB_CONNECTION=pgsql
+DB_HOST=postgres
+DB_PORT=5432
+DB_DATABASE=cafe_work_record_testing
+DB_USERNAME=laravel
+DB_PASSWORD=xxxxxxxx
+
+CACHE_STORE=array
+SESSION_DRIVER=array
+QUEUE_CONNECTION=sync
+MAIL_MAILER=array
+
+### テスト環境用のAPP_KEYを生成します。
 docker compose exec php php artisan key:generate --env=testing
-docker compose exec php php artisan config:clear
+
+### テスト用DBにマイグレーションを実行します。
 docker compose exec php php artisan migrate --env=testing
+
+## テスト実行
+
+### すべてのテストを実行
 docker compose exec php php artisan test
+
+### 特定のテストのみ実行
+docker compose exec php php artisan test --filter=CafeTest
+docker compose exec php php artisan test --filter=WorkSessionTest
+docker compose exec php php artisan test --filter=ExpenseTest
