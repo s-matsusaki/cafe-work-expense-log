@@ -41,4 +41,16 @@ class ExpenseRequest extends FormRequest
             'memo' => ['nullable', 'string'],
         ];
     }
+
+    /**
+     * Get custom attribute names for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'title' => '支出内容',
+        ];
+    }
 }

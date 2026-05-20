@@ -29,4 +29,16 @@ class CafeRequest extends FormRequest
             'memo' => ['nullable', 'string'],
         ];
     }
+
+    /**
+     * Get custom attribute names for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'name' => 'カフェ名',
+        ];
+    }
 }

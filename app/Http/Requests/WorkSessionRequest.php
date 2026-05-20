@@ -31,4 +31,17 @@ class WorkSessionRequest extends FormRequest
             'memo' => ['nullable', 'string'],
         ];
     }
+
+    /**
+     * Get custom attribute names for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'title' => '作業タイトル',
+            'work_minutes' => '作業時間（分）',
+        ];
+    }
 }
