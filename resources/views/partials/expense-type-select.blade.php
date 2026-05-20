@@ -1,14 +1,13 @@
 <div>
-    <label for="{{ $id ?? 'expense_type' }}">
+    <label for="{{ $id ?? 'expense_type' }}" class="block text-sm font-semibold text-slate-700">
         {{ $label ?? '支出種別' }}
     </label>
 
-    @if (($showBreak ?? false) === true)
-        <br>
-    @endif
-
-
-    <select name="{{ $name ?? 'expense_type' }}" id="{{ $id ?? 'expense_type' }}">
+    <select
+        name="{{ $name ?? 'expense_type' }}"
+        id="{{ $id ?? 'expense_type' }}"
+        class="mt-2 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+    >
         @if (($showAllOption ?? false) === true)
             <option value="">すべて</option>
         @else
