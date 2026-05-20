@@ -49,9 +49,11 @@
             </div>
         </form>
 
-        <p class="mt-5 text-center text-sm text-slate-600">
-            アカウントがない場合：
-            <a href="{{ route('register') }}" class="font-semibold text-blue-600 hover:text-blue-700 hover:underline">ユーザー登録</a>
-        </p>
+        @if (config('features.allow_user_registration'))
+            <p class="mt-5 text-center text-sm text-slate-600">
+                アカウントがない場合：
+                <a href="{{ route('register') }}" class="font-semibold text-blue-600 hover:text-blue-700 hover:underline">ユーザー登録</a>
+            </p>
+        @endif
     </div>
 @endsection

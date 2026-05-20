@@ -50,7 +50,9 @@
             @else
                 <nav class="mt-4 flex gap-2">
                     <a class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100" href="{{ route('login') }}">ログイン</a>
-                    <a class="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700" href="{{ route('register') }}">ユーザー登録</a>
+                    @if (config('features.allow_user_registration'))
+                        <a class="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700" href="{{ route('register') }}">ユーザー登録</a>
+                    @endif
                 </nav>
             @endauth
         </div>
