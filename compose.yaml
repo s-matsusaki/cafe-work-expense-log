@@ -28,5 +28,15 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+# 以下のようなコマンドで使用する
+# docker compose run --rm node npm install tailwindcss @tailwindcss/vite --save-dev
+# docker compose run --rm --service-ports node npm run dev
+  node:
+    image: node:22
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "5173:5173"
 volumes:
   postgres-data:
