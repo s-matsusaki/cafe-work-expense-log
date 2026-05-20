@@ -8,58 +8,72 @@
     <title>@yield('title', 'カフェログ')</title>
 </head>
 <body class="bg-slate-100 text-slate-900">
-    <header>
-        <h1>カフェログ</h1>
+    <header class="bg-white border-b border-slate-200">
+        <div class="mx-auto max-w-6xl px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-xl font-bold">
+                        カフェログ
+                    </h1>
+                    <p class="mt-1 text-sm text-slate-500">
+                        作業・支出・書籍をまとめて管理
+                    </p>
+                </div>
 
-        <div>
+                @auth
+                    <div class="text-right">
+                        <p class="text-sm text-slate-600">
+                            ログイン中：{{ auth()->user()->name }}
+                        </p>
+
+                        <form action="{{ route('logout') }}" method="POST" class="mt-2">
+                            @csrf
+                            <button
+                                type="submit"
+                                class="rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50"
+                            >
+                                ログアウト
+                            </button>
+                        </form>
+                    </div>
+                @endauth
+            </div>
+
             @auth
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <span>ログイン中：{{ auth()->user()->name }}</span>
-                    <button type="submit">ログアウト</button>
-                </form>        
+                <nav class="mt-4 flex flex-wrap gap-2">
+                    <a class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100" href="{{ route('dashboard') }}">トップ</a>
+                    <a class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100" href="{{ route('cafes.index') }}">カフェ</a>
+                    <a class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100" href="{{ route('work-sessions.index') }}">作業記録</a>
+                    <a class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100" href="{{ route('expenses.index') }}">支出</a>
+                    <a class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100" href="{{ route('books.index') }}">書籍</a>
+                </nav>
             @else
-                <p>
-                    <a href="{{ route('login') }}">ログイン</a>
-                    |
-                    <a href="{{ route('register') }}">ユーザー登録</a>
-                </p>
+                <nav class="mt-4 flex gap-2">
+                    <a class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100" href="{{ route('login') }}">ログイン</a>
+                    <a class="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700" href="{{ route('register') }}">ユーザー登録</a>
+                </nav>
             @endauth
         </div>
-
-        @auth
-            <nav>
-                <a href="{{ route('dashboard') }}" class="button-link">トップ</a>
-                |
-                <a href="{{ route('cafes.index') }}" class="button-link">カフェ一覧</a>
-                |
-                <a href="{{ route('work-sessions.index') }}" class="button-link">作業記録一覧</a>
-                |
-                <a href="{{ route('books.index') }}" class="button-link">書籍一覧</a>
-                |
-                <a href="{{ route('expenses.index') }}" class="button-link">支出一覧</a>
-            </nav>
-        @endauth
     </header>
-    
-    @if (session('status'))
-        <div class="status-message">
-            {{ session('status') }}
-        </div>
-    @endif
 
-    @if ($errors->any())
-        <div class="error-message">
-            <p>入力内容を確認してください</p>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <main class="mx-auto max-w-6xl px-6 py-8">
+        @if (session('status'))
+            <div class="mb-6 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+                {{ session('status') }}
+            </div>
+        @endif
 
-    <main>
+        @if ($errors->any())
+            <div class="mb-6 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+                <p class="font-semibold">入力内容を確認してください。</p>
+                <ul class="mt-2 list-disc pl-5">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         @yield('content')
     </main>
 </body>
