@@ -107,13 +107,14 @@ expenses:支出記録
 ### リレーション概要
 
 - User は複数の Cafe を持つ
+- User は複数の Book を持つ
 - User は複数の WorkSession を持つ
 - User は複数の Expense を持つ
 - Cafe は複数の WorkSession を持つ
 - Cafe は複数の Expense を持つ
 - WorkSession は Cafe に紐づく
 - WorkSession は複数の Expense を持つ
-- Expense は Cafe / WorkSession に任意で紐づく
+- Expense は Cafe / WorkSession / booksに任意で紐づく
 
 
 ### Dockerによる開発環境構築
@@ -140,12 +141,7 @@ cd リポジトリ名
 docker compose up -d --build
 
 ### .env を作成・設定
-DB_CONNECTION=pgsql
-DB_HOST=postgres
-DB_PORT=5432
-DB_DATABASE=cafe_work_record
-DB_USERNAME=laravel
-DB_PASSWORD=xxxxxxxx
+.env.example をコピーして .env を作成してください。
 
 ### マイグレーション実行
 docker compose exec php php artisan migrate
@@ -196,3 +192,20 @@ docker compose exec php php artisan test --filter=ExpenseTest
 ### ポートフォリオ確認用に、デモユーザーとサンプルデータを作成するSeederを用意しています。
 docker compose exec php php artisan db:seed --class=DemoUserSeeder
 docker compose exec php php artisan db:seed --class=DemoDataSeeder
+
+## 本番公開前チェックリスト
+
+- [ ] APP_ENV=production
+- [ ] APP_DEBUG=false
+- [ ] APP_URLを本番URLに設定
+- [ ] ALLOW_USER_REGISTRATION=false
+- [ ] 本番DB接続情報を設定
+- [ ] 本番APP_KEYを生成
+- [ ] migrate実行
+- [ ] DemoUserSeeder / DemoDataSeeder 実行
+- [ ] OwnerUserSeeder 実行
+- [ ] Basic認証設定
+- [ ] HTTPS化
+- [ ] AWS Budgets設定
+- [ ] テスト全件成功
+- [ ] config:cache / route:cache / view:cache 実行
