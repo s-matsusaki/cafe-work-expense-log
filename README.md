@@ -190,3 +190,9 @@ docker compose exec php php artisan test
 docker compose exec php php artisan test --filter=CafeTest
 docker compose exec php php artisan test --filter=WorkSessionTest
 docker compose exec php php artisan test --filter=ExpenseTest
+
+## デモデータ
+
+### ポートフォリオ確認用に、デモユーザーとサンプルデータを作成するSeederを用意しています。
+docker compose exec php php artisan db:seed --class=DemoUserSeeder
+docker compose exec php php artisan db:seed --class=DemoDataSeeder
