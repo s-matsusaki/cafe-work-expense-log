@@ -43,9 +43,9 @@
                 <nav class="mt-4 flex flex-wrap gap-2">
                     <a class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100" href="{{ route('dashboard') }}">トップ</a>
                     <a class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100" href="{{ route('cafes.index') }}">カフェ</a>
+                    <a class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100" href="{{ route('books.index') }}">書籍</a>
                     <a class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100" href="{{ route('work-sessions.index') }}">作業記録</a>
                     <a class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100" href="{{ route('expenses.index') }}">支出</a>
-                    <a class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100" href="{{ route('books.index') }}">書籍</a>
                 </nav>
             @else
                 <nav class="mt-4 flex gap-2">
