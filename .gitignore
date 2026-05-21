@@ -57,3 +57,6 @@ Homestead.json
 .env.production
 .phpactor.json
 auth.json
+
+.htpasswd
+docker/nginx/.htpasswd
