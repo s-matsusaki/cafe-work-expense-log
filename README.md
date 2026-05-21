@@ -209,3 +209,13 @@ docker compose exec php php artisan db:seed --class=DemoDataSeeder
 - [ ] AWS Budgets設定
 - [ ] テスト全件成功
 - [ ] config:cache / route:cache / view:cache 実行
+
+### .env変更時の注意
+
+`compose.prod.yaml` で `env_file: .env` を使用しているため、`.env` を変更した場合は既存コンテナに反映されないことがあります。
+
+その場合は以下でコンテナを再作成します。
+
+```bash
+docker compose -f compose.prod.yaml down
+docker compose -f compose.prod.yaml up -d --build
