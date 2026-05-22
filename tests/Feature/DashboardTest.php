@@ -6,7 +6,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Book;
+use App\Models\Expense;
 use App\Models\User;
+use App\Models\WorkSession;
 
 class DashboardTest extends TestCase
 {
@@ -58,5 +60,28 @@ class DashboardTest extends TestCase
 
         $response->assertOk();
         $response->assertDontSee('他人の本');
+    }
+
+    public function test_dashboard_shows_work_and_expense_dates_with_weekday(): void
+    {
+        $user = User::factory()->create();
+
+        WorkSession::factory()->create([
+            'user_id' => $user->id,
+            'work_date' => '2026-05-19',
+        ]);
+
+        Expense::factory()->create([
+            'user_id' => $user->id,
+            'expense_date' => '2026-05-20',
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('dashboard'));
+
+        $response->assertOk();
+        $response->assertSee('2026-05-19（火）');
+        $response->assertSee('2026-05-20（水）');
     }
 }

@@ -119,7 +119,7 @@
                         @foreach ($expenses as $expense)
                             <tr class="hover:bg-slate-50">
                                 <td class="whitespace-nowrap px-4 py-4 text-sm text-slate-500">#{{ $expense->id }}</td>
-                                <td class="whitespace-nowrap px-4 py-4 text-sm text-slate-700">{{ $expense->expense_date?->format('Y-m-d') }}</td>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm text-slate-700">{{ $expense->expense_date_label }}</td>
                                 <td class="px-4 py-4 text-sm font-semibold text-slate-900">{{ $expense->title }}</td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm text-slate-700">{{ number_format($expense->amount) }}円</td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm text-slate-700">{{ $expense->expense_type }}</td>

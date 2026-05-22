@@ -69,6 +69,7 @@ class WorkSessionTest extends TestCase
 
         $workSession = WorkSession::factory()->create([
             'user_id' => $user->id,
+            'work_date' => '2026-05-19',
         ]);
 
         $response = $this
@@ -76,6 +77,24 @@ class WorkSessionTest extends TestCase
             ->get(route('work-sessions.show', $workSession));
 
         $response->assertOK();
+        $response->assertSee('2026-05-19（火）');
+    }
+
+    public function test_work_sessions_index_shows_work_date_with_weekday(): void
+    {
+        $user = User::factory()->create();
+
+        WorkSession::factory()->create([
+            'user_id' => $user->id,
+            'work_date' => '2026-05-19',
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('work-sessions.index'));
+
+        $response->assertOk();
+        $response->assertSee('2026-05-19（火）');
     }
 
     public function test_user_cannnot_view_other_users_work_session(): void

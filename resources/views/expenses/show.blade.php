@@ -35,7 +35,7 @@
 
             <div class="grid gap-1 px-6 py-4 sm:grid-cols-3 sm:gap-4">
                 <dt class="text-sm font-semibold text-slate-500">支出日</dt>
-                <dd class="text-sm text-slate-900 sm:col-span-2">{{ $expense->expense_date?->format('Y-m-d') }}</dd>
+                <dd class="text-sm text-slate-900 sm:col-span-2">{{ $expense->expense_date_label }}</dd>
             </div>
 
             <div class="grid gap-1 px-6 py-4 sm:grid-cols-3 sm:gap-4">
@@ -70,7 +70,13 @@
 
             <div class="grid gap-1 px-6 py-4 sm:grid-cols-3 sm:gap-4">
                 <dt class="text-sm font-semibold text-slate-500">関連作業記録</dt>
-                <dd class="text-sm text-slate-900 sm:col-span-2">{{ $expense->workSession?->title ?? '未設定' }}</dd>
+                <dd class="text-sm text-slate-900 sm:col-span-2">
+                    @if ($expense->workSession)
+                        {{ $expense->workSession->work_date_label }} - {{ $expense->workSession->title }}
+                    @else
+                        未設定
+                    @endif
+                </dd>
             </div>
 
             <div class="grid gap-1 px-6 py-4 sm:grid-cols-3 sm:gap-4">

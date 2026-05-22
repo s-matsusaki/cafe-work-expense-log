@@ -35,7 +35,7 @@
 
             <div class="grid gap-1 px-6 py-4 sm:grid-cols-3 sm:gap-4">
                 <dt class="text-sm font-semibold text-slate-500">作業日</dt>
-                <dd class="text-sm text-slate-900 sm:col-span-2">{{ $workSession->work_date?->format('Y-m-d') }}</dd>
+                <dd class="text-sm text-slate-900 sm:col-span-2">{{ $workSession->work_date_label }}</dd>
             </div>
 
             <div class="grid gap-1 px-6 py-4 sm:grid-cols-3 sm:gap-4">

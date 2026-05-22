@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\FormatsDateWithWeekday;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Expense extends Model
 {
     use HasFactory;
+    use FormatsDateWithWeekday;
 
     protected $fillable = [
         'user_id',
@@ -31,6 +33,11 @@ class Expense extends Model
         'accounting_recorded' => 'boolean',
         'accounting_recorded_at' => 'datetime',
     ];
+
+    public function getExpenseDateLabelAttribute(): ?string
+    {
+        return $this->formatDateWithWeekday($this->expense_date);
+    }
 
     public function user(): BelongsTo
     {

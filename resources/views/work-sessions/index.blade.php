@@ -125,7 +125,7 @@
                         @foreach ($workSessions as $workSession)
                             <tr class="hover:bg-slate-50">
                                 <td class="whitespace-nowrap px-4 py-4 text-sm text-slate-500">#{{ $workSession->id }}</td>
-                                <td class="whitespace-nowrap px-4 py-4 text-sm text-slate-700">{{ $workSession->work_date?->format('Y-m-d') }}</td>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm text-slate-700">{{ $workSession->work_date_label }}</td>
                                 <td class="px-4 py-4 text-sm font-semibold text-slate-900">{{ $workSession->title }}</td>
                                 <td class="px-4 py-4 text-sm text-slate-700">{{ $workSession->cafe?->name ?? '未設定' }}</td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm text-slate-700">

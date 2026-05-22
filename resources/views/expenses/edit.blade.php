@@ -117,7 +117,7 @@
                             value="{{ $workSession->id }}"
                             @selected((string) old('work_session_id', $expense->work_session_id) === (string) $workSession->id)
                         >
-                            {{ $workSession->work_date?->format('Y-m-d') }}
+                            {{ $workSession->work_date_label }}
                             -
                             {{ $workSession->title }}
                             @if ($workSession->cafe)

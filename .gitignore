@@ -60,3 +60,5 @@ auth.json
 
 .htpasswd
 docker/nginx/.htpasswd
+
+/tmp/*

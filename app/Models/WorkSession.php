@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\FormatsDateWithWeekday;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class WorkSession extends Model
 {
     use HasFactory;
+    use FormatsDateWithWeekday;
     
     protected $fillable = [
         'user_id',
@@ -24,6 +26,11 @@ class WorkSession extends Model
     protected $casts = [
         'work_date' => 'date',
     ];
+
+    public function getWorkDateLabelAttribute(): ?string
+    {
+        return $this->formatDateWithWeekday($this->work_date);
+    }
 
     public function user(): BelongsTo
     {

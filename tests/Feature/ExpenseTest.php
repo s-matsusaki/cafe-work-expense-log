@@ -85,6 +85,7 @@ class ExpenseTest extends TestCase
 
         $expense = Expense::factory()->create([
             'user_id' => $user->id,
+            'expense_date' => '2026-05-19',
         ]);
 
         $response = $this
@@ -92,6 +93,24 @@ class ExpenseTest extends TestCase
             ->get(route('expenses.show', $expense));
 
         $response->assertOk();
+        $response->assertSee('2026-05-19（火）');
+    }
+
+    public function test_expenses_index_shows_expense_date_with_weekday(): void
+    {
+        $user = User::factory()->create();
+
+        Expense::factory()->create([
+            'user_id' => $user->id,
+            'expense_date' => '2026-05-19',
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('expenses.index'));
+
+        $response->assertOk();
+        $response->assertSee('2026-05-19（火）');
     }
 
     public function test_user_cannot_view_other_users_expense(): void
