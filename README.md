@@ -27,35 +27,23 @@ https://cafe-log.azumaki.com
 
 ## 使用技術
 
-区分:技術
-
-バックエンド:PHP / Laravel
-
-フロントエンド:Blade / Tailwind CSS
-
-データベース:PostgreSQL
-
-Webサーバー:nginx
-
-実行環境:Docker / Docker Compose
-
-テスト:PHPUnit / Laravel Feature Test
-
-認可:Laravel Policy
-
-バリデーション:FormRequest
-
-フロントビルド:Vite
-
-本番環境:AWS EC2 |
-
-DNS:Amazon Route 53
-
-HTTPS:Let's Encrypt / Certbot
-
-コスト管理:AWS Budgets
-
-DB確認:DBeaver
+| 区分 | 技術 |
+|---|---|
+| バックエンド | PHP / Laravel |
+| フロントエンド | Blade / Tailwind CSS |
+| データベース | PostgreSQL |
+| Webサーバー | nginx |
+| 開発環境 | Docker / Docker Compose |
+| テスト | PHPUnit / Laravel Feature Test |
+| 認証 | Laravel標準の認証処理をベースに実装 |
+| 認可 | Laravel Policy |
+| バリデーション | FormRequest |
+| フロントビルド | Vite |
+| 本番環境 | AWS EC2 |
+| DNS | Amazon Route 53 |
+| HTTPS | Let's Encrypt / Certbot |
+| コスト管理 | AWS Budgets |
+| DB確認 | DBeaver |
 
 
 
