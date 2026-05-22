@@ -17,7 +17,7 @@ class DemoUserSeeder extends Seeder
             ['email' => 'demo@example.com'],
             [
                 'name' => 'デモユーザー',
-                'password' => 'password',
+                'password' => 'CafeWorkDemo_2026!',
             ]
         );
     }
