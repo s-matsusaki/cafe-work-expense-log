@@ -23,6 +23,8 @@ class WorkSessionFactory extends Factory
             'user_id' => User::factory(),
             'cafe_id' => Cafe::factory(),
             'work_date' => $this->faker->date(),
+            'start_time' => null,
+            'end_time' => null,
             'title' => $this->faker->sentence(3),
             'work_minutes' => $this->faker->numberBetween(30, 240),
             'category' => $this->faker->randomElement(['development', 'study', 'reading']),

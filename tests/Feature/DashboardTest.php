@@ -69,6 +69,8 @@ class DashboardTest extends TestCase
         WorkSession::factory()->create([
             'user_id' => $user->id,
             'work_date' => '2026-05-19',
+            'start_time' => '09:00',
+            'end_time' => '11:30',
         ]);
 
         Expense::factory()->create([
@@ -82,6 +84,7 @@ class DashboardTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('2026-05-19（火）');
+        $response->assertSee('09:00〜11:30');
         $response->assertSee('2026-05-20（水）');
     }
 }

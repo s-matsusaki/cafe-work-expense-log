@@ -72,7 +72,7 @@
                 <dt class="text-sm font-semibold text-slate-500">関連作業記録</dt>
                 <dd class="text-sm text-slate-900 sm:col-span-2">
                     @if ($expense->workSession)
-                        {{ $expense->workSession->work_date_label }} - {{ $expense->workSession->title }}
+                        {{ $expense->workSession->work_date_label }} {{ $expense->workSession->time_range_label }} - {{ $expense->workSession->title }}
                     @else
                         未設定
                     @endif

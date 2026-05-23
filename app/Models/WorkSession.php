@@ -17,6 +17,8 @@ class WorkSession extends Model
         'user_id',
         'cafe_id',
         'work_date',
+        'start_time',
+        'end_time',
         'title',
         'work_minutes',
         'category',
@@ -30,6 +32,28 @@ class WorkSession extends Model
     public function getWorkDateLabelAttribute(): ?string
     {
         return $this->formatDateWithWeekday($this->work_date);
+    }
+
+    public function getTimeRangeLabelAttribute(): string
+    {
+        if (blank($this->start_time) && blank($this->end_time)) {
+            return '未入力';
+        }
+
+        if (blank($this->start_time)) {
+            return '〜'.$this->formatTime($this->end_time);
+        }
+
+        if (blank($this->end_time)) {
+            return $this->formatTime($this->start_time).'〜';
+        }
+
+        return $this->formatTime($this->start_time).'〜'.$this->formatTime($this->end_time);
+    }
+
+    private function formatTime(string $time): string
+    {
+        return substr($time, 0, 5);
     }
 
     public function user(): BelongsTo

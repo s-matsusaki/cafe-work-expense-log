@@ -54,6 +54,20 @@
                 'selectedCafeId' => old('cafe_id'),
             ])
 
+            <div class="grid gap-6 md:grid-cols-2">
+                @include('partials.time-select', [
+                    'name' => 'start_time',
+                    'label' => '開始時刻',
+                    'value' => null,
+                ])
+
+                @include('partials.time-select', [
+                    'name' => 'end_time',
+                    'label' => '終了時刻',
+                    'value' => null,
+                ])
+            </div>
+
             <div>
                 <label for="work_minutes" class="block text-sm font-semibold text-slate-700">作業時間（分）</label>
                 <input
@@ -61,6 +75,7 @@
                     id="work_minutes"
                     name="work_minutes"
                     min="0"
+                    step="10"
                     value="{{ old('work_minutes') }}"
                     class="mt-2 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     placeholder="例: 120"

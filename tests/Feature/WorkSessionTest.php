@@ -44,6 +44,10 @@ class WorkSessionTest extends TestCase
             ->post(route('work-sessions.store'), [
                 'cafe_id' => $cafe->id,
                 'work_date' => '2026-05-19 00:00:00',
+                'start_time_hour' => '09',
+                'start_time_minute' => '00',
+                'end_time_hour' => '11',
+                'end_time_minute' => '00',
                 'title' => 'Laravelテスト実装',
                 'work_minutes' => 120,
                 'category' => 'development',
@@ -56,6 +60,8 @@ class WorkSessionTest extends TestCase
             'user_id' => $user->id,
             'cafe_id' => $cafe->id,
             'work_date' => '2026-05-19 00:00:00',
+            'start_time' => '09:00',
+            'end_time' => '11:00',
             'title' => 'Laravelテスト実装',
             'work_minutes' => 120,
             'category' => 'development',
@@ -70,6 +76,8 @@ class WorkSessionTest extends TestCase
         $workSession = WorkSession::factory()->create([
             'user_id' => $user->id,
             'work_date' => '2026-05-19',
+            'start_time' => '09:00',
+            'end_time' => '11:30',
         ]);
 
         $response = $this
@@ -78,6 +86,7 @@ class WorkSessionTest extends TestCase
 
         $response->assertOK();
         $response->assertSee('2026-05-19（火）');
+        $response->assertSee('09:00〜11:30');
     }
 
     public function test_work_sessions_index_shows_work_date_with_weekday(): void
@@ -87,6 +96,8 @@ class WorkSessionTest extends TestCase
         WorkSession::factory()->create([
             'user_id' => $user->id,
             'work_date' => '2026-05-19',
+            'start_time' => '09:00',
+            'end_time' => '11:30',
         ]);
 
         $response = $this
@@ -95,6 +106,7 @@ class WorkSessionTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('2026-05-19（火）');
+        $response->assertSee('09:00〜11:30');
     }
 
     public function test_user_cannnot_view_other_users_work_session(): void
@@ -132,6 +144,10 @@ class WorkSessionTest extends TestCase
             ->put(route('work-sessions.update', $workSession), [
                 'cafe_id' => $cafe->id,
                 'work_date' => '2026-05-20 00:00:00',
+                'start_time_hour' => '14',
+                'start_time_minute' => '00',
+                'end_time_hour' => '17',
+                'end_time_minute' => '00',
                 'title' => 'After Work',
                 'work_minutes' => 180,
                 'category' => 'study',
@@ -145,6 +161,8 @@ class WorkSessionTest extends TestCase
             'user_id' => $user->id,
             'cafe_id' => $cafe->id,
             'work_date' => '2026-05-20 00:00:00',
+            'start_time' => '14:00',
+            'end_time' => '17:00',
             'title' => 'After Work',
             'work_minutes' => 180,
             'category' => 'study',
@@ -173,7 +191,7 @@ class WorkSessionTest extends TestCase
                 'cafe_id' => $otherCafe->id,
                 'work_date' => '2026-05-20 00:00:00',
                 'title' => 'Updated By Wrong User',
-                'work_minutes' => 999,
+                'work_minutes' => 990,
                 'category' => 'invalid',
                 'memo' => '不正更新',
             ]);
@@ -185,6 +203,72 @@ class WorkSessionTest extends TestCase
             'user_id' => $otherUser->id,
             'title' => 'Other User Work',
         ]);
+    }
+
+    public function test_work_session_end_time_must_be_after_start_time(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->post(route('work-sessions.store'), [
+                'work_date' => '2026-05-19',
+                'start_time' => '18:00',
+                'end_time' => '17:00',
+                'title' => 'Invalid Time Range',
+                'work_minutes' => 60,
+            ]);
+
+        $response->assertSessionHasErrors('end_time');
+    }
+
+    public function test_work_session_times_must_be_in_ten_minute_steps(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->post(route('work-sessions.store'), [
+                'work_date' => '2026-05-19',
+                'start_time' => '09:05',
+                'end_time' => '11:15',
+                'title' => 'Invalid Time Step',
+                'work_minutes' => 60,
+            ]);
+
+        $response->assertSessionHasErrors(['start_time', 'end_time']);
+    }
+
+    public function test_work_session_time_parts_must_be_completed_together(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->post(route('work-sessions.store'), [
+                'work_date' => '2026-05-19',
+                'start_time_hour' => '09',
+                'start_time_minute' => '',
+                'title' => 'Incomplete Time Parts',
+                'work_minutes' => 60,
+            ]);
+
+        $response->assertSessionHasErrors('start_time');
+    }
+
+    public function test_work_minutes_must_be_multiple_of_ten(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->post(route('work-sessions.store'), [
+                'work_date' => '2026-05-19',
+                'title' => 'Invalid Work Minutes',
+                'work_minutes' => 15,
+            ]);
+
+        $response->assertSessionHasErrors('work_minutes');
     }
 
     public function test_authenticated_user_can_delete_own_work_session(): void

@@ -95,6 +95,7 @@
                                 <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">作業日</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">タイトル</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">カフェ</th>
+                                <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">時間帯</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">作業時間</th>
                                 <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">操作</th>
                             </tr>
@@ -105,6 +106,7 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-slate-700">{{ $workSession->work_date_label }}</td>
                                     <td class="px-4 py-4 text-sm font-semibold text-slate-900">{{ $workSession->title }}</td>
                                     <td class="px-4 py-4 text-sm text-slate-700">{{ $workSession->cafe?->name ?? '未設定' }}</td>
+                                    <td class="whitespace-nowrap px-4 py-4 text-sm text-slate-700">{{ $workSession->time_range_label }}</td>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-slate-700">
                                         @if (!is_null($workSession->work_minutes))
                                             {{ $workSession->work_minutes }}分
