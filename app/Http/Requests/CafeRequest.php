@@ -38,7 +38,7 @@ class CafeRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'カフェ名',
+            'name' => '場所名',
         ];
     }
 }

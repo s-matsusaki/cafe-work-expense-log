@@ -82,7 +82,7 @@
             </div>
 
             @include('partials.cafe-select', [
-                'label' => '関連カフェ',
+                'label' => '利用場所',
                 'cafes' => $cafes,
                 'name' => 'cafe_id',
                 'id' => 'cafe_id',

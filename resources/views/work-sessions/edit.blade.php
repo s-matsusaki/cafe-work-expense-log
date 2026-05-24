@@ -55,7 +55,7 @@
             </div>
 
             @include('partials.cafe-select', [
-                'label' => 'カフェ',
+                'label' => '作業場所',
                 'cafes' => $cafes,
                 'name' => 'cafe_id',
                 'id' => 'cafe_id',

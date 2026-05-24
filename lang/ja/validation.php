@@ -196,7 +196,7 @@ return [
 
         'purchased_on' => '購入日',
 
-        'cafe_id' => 'カフェ',
+        'cafe_id' => '場所',
         'work_date' => '作業日',
         'work_minutes' => '作業時間',
         'category' => 'カテゴリ',

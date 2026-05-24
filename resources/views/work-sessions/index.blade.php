@@ -8,7 +8,7 @@
             <p class="text-sm font-medium text-blue-600">Work Sessions</p>
             <h2 class="mt-1 text-2xl font-bold text-slate-900">作業記録一覧</h2>
             <p class="mt-2 text-sm text-slate-500">
-                カフェでの作業時間や内容を管理します。
+                作業場所ごとの作業時間や内容を管理します。
             </p>
         </div>
 
@@ -35,7 +35,7 @@
             </div>
 
             @include('partials.cafe-select', [
-                'label' => 'カフェ',
+                'label' => '作業場所',
                 'cafes' => $cafes,
                 'name' => 'cafe_id',
                 'id' => 'cafe_id',
@@ -98,7 +98,7 @@
     @if ($workSessions->isEmpty())
         <div class="rounded-lg border border-dashed border-slate-300 bg-white px-6 py-12 text-center shadow-sm">
             <h3 class="text-base font-semibold text-slate-900">登録されている作業記録はありません</h3>
-            <p class="mt-2 text-sm text-slate-500">最初の作業記録を登録して、カフェでの作業時間を見える化しましょう。</p>
+            <p class="mt-2 text-sm text-slate-500">最初の作業記録を登録して、場所ごとの作業時間を見える化しましょう。</p>
             <a
                 href="{{ route('work-sessions.create') }}"
                 class="mt-5 inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
@@ -115,7 +115,7 @@
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">ID</th>
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">作業日</th>
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">タイトル</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">カフェ</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">作業場所</th>
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">時間帯</th>
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">作業時間</th>
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">カテゴリ</th>

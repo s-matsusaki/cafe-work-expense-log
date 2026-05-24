@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'カフェ編集')
+@section('title', '場所編集')
 
 @section('content')
     <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <p class="text-sm font-medium text-blue-600">Edit Cafe</p>
-            <h2 class="mt-1 text-2xl font-bold text-slate-900">カフェ編集</h2>
+            <p class="text-sm font-medium text-blue-600">Edit Place</p>
+            <h2 class="mt-1 text-2xl font-bold text-slate-900">場所編集</h2>
             <p class="mt-2 text-sm text-slate-500">{{ $cafe->name }} の情報を更新します。</p>
         </div>
 
@@ -32,14 +32,14 @@
 
         <div class="grid gap-6">
             <div>
-                <label for="name" class="block text-sm font-semibold text-slate-700">カフェ名</label>
+                <label for="name" class="block text-sm font-semibold text-slate-700">場所名</label>
                 <input
                     type="text"
                     id="name"
                     name="name"
                     value="{{ old('name', $cafe->name) }}"
                     class="mt-2 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    placeholder="例: スターバックス コーヒー 天神地下街店"
+                    placeholder="例: スターバックス コーヒー 天神地下街店、自宅、ラウンジ"
                 >
             </div>
 

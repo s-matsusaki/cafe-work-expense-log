@@ -41,7 +41,7 @@ class CafeController extends Controller
 
         return redirect()
             ->route('cafes.index')
-            ->with('status', 'カフェを登録しました。');
+            ->with('status', '場所を登録しました。');
     }
 
     /**
@@ -77,7 +77,7 @@ class CafeController extends Controller
 
         return redirect()
             ->route('cafes.show', $cafe)
-            ->with('status', 'カフェ情報を更新しました。');
+            ->with('status', '場所情報を更新しました。');
     }
 
     /**
@@ -91,6 +91,6 @@ class CafeController extends Controller
 
         return redirect()
             ->route('cafes.index')
-            ->with('status', 'カフェを削除しました。');
+            ->with('status', '場所を削除しました。');
     }
 }

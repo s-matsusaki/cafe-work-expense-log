@@ -7,7 +7,7 @@
         <div class="mb-6">
             <p class="text-sm font-medium text-blue-600">Register</p>
             <h2 class="mt-1 text-2xl font-bold text-slate-900">ユーザー登録</h2>
-            <p class="mt-2 text-sm text-slate-500">アカウントを作成して、カフェでの作業ログを始めます。</p>
+            <p class="mt-2 text-sm text-slate-500">アカウントを作成して、作業記録を始めます。</p>
         </div>
 
         <form action="{{ route('register') }}" method="POST" class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">

@@ -1,5 +1,5 @@
 <div>
-    <label for="{{ $id ?? 'cafe_id' }}" class="block text-sm font-semibold text-slate-700">{{ $label ?? 'カフェ' }}</label>
+    <label for="{{ $id ?? 'cafe_id' }}" class="block text-sm font-semibold text-slate-700">{{ $label ?? '場所' }}</label>
 
     <select
         id="{{ $id ?? 'cafe_id' }}"

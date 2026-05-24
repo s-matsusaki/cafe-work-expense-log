@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'カフェ詳細')
+@section('title', '場所詳細')
 
 @section('content')
     <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <p class="text-sm font-medium text-blue-600">Cafe Detail</p>
+            <p class="text-sm font-medium text-blue-600">Place Detail</p>
             <h2 class="mt-1 text-2xl font-bold text-slate-900">{{ $cafe->name }}</h2>
-            <p class="mt-2 text-sm text-slate-500">登録したカフェの詳細情報です。</p>
+            <p class="mt-2 text-sm text-slate-500">登録した場所の詳細情報です。</p>
         </div>
 
         <div class="flex flex-wrap gap-2">
@@ -40,7 +40,7 @@
             </div>
 
             <div class="grid gap-1 px-6 py-4 sm:grid-cols-3 sm:gap-4">
-                <dt class="text-sm font-semibold text-slate-500">カフェ名</dt>
+                <dt class="text-sm font-semibold text-slate-500">場所名</dt>
                 <dd class="text-sm font-medium text-slate-900 sm:col-span-2">{{ $cafe->name }}</dd>
             </div>
 

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+// Cafe は、当初カフェでの作業記録を主目的としていた頃の歴史的な名称。
+// UI上は、自宅やラウンジなども含む汎用的な「場所」として扱う。
 class Cafe extends Model
 {
     use HasFactory;

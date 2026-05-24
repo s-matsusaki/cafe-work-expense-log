@@ -7,7 +7,7 @@
         <div>
             <p class="text-sm font-medium text-blue-600">New Work Session</p>
             <h2 class="mt-1 text-2xl font-bold text-slate-900">作業記録登録</h2>
-            <p class="mt-2 text-sm text-slate-500">カフェでの作業内容と時間を登録します。</p>
+            <p class="mt-2 text-sm text-slate-500">作業場所と作業内容、時間を登録します。</p>
         </div>
 
         <a
@@ -46,7 +46,7 @@
             </div>
 
             @include('partials.cafe-select', [
-                'label' => 'カフェ',
+                'label' => '作業場所',
                 'cafes' => $cafes,
                 'name' => 'cafe_id',
                 'id' => 'cafe_id',

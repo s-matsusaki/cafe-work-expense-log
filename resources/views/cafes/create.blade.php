@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'カフェ登録')
+@section('title', '場所登録')
 
 @section('content')
     <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <p class="text-sm font-medium text-blue-600">New Cafe</p>
-            <h2 class="mt-1 text-2xl font-bold text-slate-900">カフェ登録</h2>
-            <p class="mt-2 text-sm text-slate-500">作業に使うカフェの基本情報を登録します。</p>
+            <p class="text-sm font-medium text-blue-600">New Place</p>
+            <h2 class="mt-1 text-2xl font-bold text-slate-900">場所登録</h2>
+            <p class="mt-2 text-sm text-slate-500">作業場所を登録します。</p>
         </div>
 
         <a
@@ -23,14 +23,14 @@
 
         <div class="grid gap-6">
             <div>
-                <label for="name" class="block text-sm font-semibold text-slate-700">カフェ名</label>
+                <label for="name" class="block text-sm font-semibold text-slate-700">場所名</label>
                 <input
                     type="text"
                     id="name"
                     name="name"
                     value="{{ old('name') }}"
                     class="mt-2 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    placeholder="例: スターバックス コーヒー 天神地下街店"
+                    placeholder="例: スターバックス コーヒー 天神地下街店、自宅、ラウンジ"
                 >
             </div>
 

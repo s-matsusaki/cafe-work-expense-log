@@ -44,7 +44,7 @@
             </div>
 
             <div class="grid gap-1 px-6 py-4 sm:grid-cols-3 sm:gap-4">
-                <dt class="text-sm font-semibold text-slate-500">カフェ</dt>
+                <dt class="text-sm font-semibold text-slate-500">作業場所</dt>
                 <dd class="text-sm text-slate-900 sm:col-span-2">{{ $workSession->cafe?->name ?? '未設定' }}</dd>
             </div>
 

@@ -47,8 +47,8 @@
 
         <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <a href="{{ route('cafes.index') }}" class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:border-blue-200 hover:bg-blue-50">
-                <p class="text-sm font-medium text-blue-600">Cafes</p>
-                <p class="mt-1 text-base font-semibold text-slate-900">カフェ一覧</p>
+                <p class="text-sm font-medium text-blue-600">Places</p>
+                <p class="mt-1 text-base font-semibold text-slate-900">場所一覧</p>
             </a>
 
             <a href="{{ route('books.index') }}" class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:border-blue-200 hover:bg-blue-50">
@@ -72,7 +72,7 @@
         <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <h3 class="text-lg font-bold text-slate-900">直近の作業記録</h3>
-                <p class="mt-1 text-sm text-slate-500">最近登録した作業ログです。</p>
+                <p class="mt-1 text-sm text-slate-500">最近登録した作業記録です。</p>
             </div>
             <a
                 href="{{ route('work-sessions.index') }}"
@@ -94,7 +94,7 @@
                             <tr>
                                 <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">作業日</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">タイトル</th>
-                                <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">カフェ</th>
+                                <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">作業場所</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">時間帯</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">作業時間</th>
                                 <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">操作</th>

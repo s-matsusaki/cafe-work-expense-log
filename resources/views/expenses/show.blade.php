@@ -59,7 +59,7 @@
             </div>
 
             <div class="grid gap-1 px-6 py-4 sm:grid-cols-3 sm:gap-4">
-                <dt class="text-sm font-semibold text-slate-500">関連カフェ</dt>
+                <dt class="text-sm font-semibold text-slate-500">利用場所</dt>
                 <dd class="text-sm text-slate-900 sm:col-span-2">{{ $expense->cafe?->name ?? '未設定' }}</dd>
             </div>
 
