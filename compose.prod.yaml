@@ -12,6 +12,9 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - php
+    networks:
+      - default
+      - shared-proxy-network
 
   php:
     build:
@@ -35,3 +38,7 @@ services:
 
 volumes:
   postgres-data:
+
+networks:
+  shared-proxy-network:
+    external: true
