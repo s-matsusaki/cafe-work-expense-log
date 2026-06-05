@@ -62,3 +62,5 @@ auth.json
 docker/nginx/.htpasswd
 
 /tmp/*
+
+linux_work/*

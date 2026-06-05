@@ -4,6 +4,12 @@
 
 個人事業主・フリーランスとしての活動を想定し、作業時間やカフェ利用、経費記録を一元管理することで、日々の作業振り返りや確定申告準備を補助することを目的としています。
 
+## 設計書
+
+- [基本設計書](docs/basic-design.md)
+- [詳細設計書](docs/detailed-design.md)
+- [ChatGPT新機能検討用プロンプト](docs/chatgpt-feature-planning-prompt.md)
+
 
 
 ## 公開URL

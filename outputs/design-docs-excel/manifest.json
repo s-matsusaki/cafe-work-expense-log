@@ -1,0 +1,16 @@
+[
+  {
+    "kind": "基本設計書",
+    "output": "/Users/smmac/dev/cafe-work-expense-log/outputs/design-docs-excel/cafe-log-basic-design.xlsx",
+    "headings": 17,
+    "diagrams": 10,
+    "tables": 4
+  },
+  {
+    "kind": "詳細設計書",
+    "output": "/Users/smmac/dev/cafe-work-expense-log/outputs/design-docs-excel/cafe-log-detailed-design.xlsx",
+    "headings": 43,
+    "diagrams": 19,
+    "tables": 22
+  }
+]
