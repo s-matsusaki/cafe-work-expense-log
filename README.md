@@ -436,6 +436,14 @@ docker compose -f compose.prod.yaml down
 docker compose -f compose.prod.yaml up -d --build
 ```
 
+## 本番更新手順
+
+本番環境で最新コードの取得、依存関係更新、フロントビルド、マイグレーション、Laravelキャッシュ再生成をまとめて実行する場合は、以下を使用します。
+
+```bash
+./scripts/deploy-prod.sh
+```
+
 
 ## 今後の改善予定
 
