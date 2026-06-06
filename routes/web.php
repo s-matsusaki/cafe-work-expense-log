@@ -8,6 +8,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\MonthlyReportApiController;
+use App\Http\Controllers\MonthlyReportController;
 
 Route::middleware('guest')->group(function() {
     Route::get('/register', [RegisteredUserController::class, 'create'])
@@ -24,6 +26,12 @@ Route::middleware('guest')->group(function() {
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])
     ->name('dashboard');
+
+    Route::get('/reports/monthly', [MonthlyReportController::class, 'index'])
+        ->name('reports.monthly');
+
+    Route::get('/api/reports/monthly', [MonthlyReportApiController::class, 'show'])
+        ->name('api.reports.monthly');
 
     Route::resource('cafes', CafeController::class);
     Route::resource('work-sessions', WorkSessionController::class);
