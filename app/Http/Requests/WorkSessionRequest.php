@@ -38,6 +38,7 @@ class WorkSessionRequest extends FormRequest
     {
         $this->mergeTimeParts('start_time');
         $this->mergeTimeParts('end_time');
+        $this->mergeCalculatedWorkMinutes();
     }
 
     /**
@@ -112,5 +113,34 @@ class WorkSessionRequest extends FormRequest
         $this->merge([
             $field => sprintf('%02d:%02d', (int) $hour, (int) $minute),
         ]);
+    }
+
+    private function mergeCalculatedWorkMinutes(): void
+    {
+        if (filled($this->input('work_minutes'))) {
+            return;
+        }
+
+        $startMinutes = $this->timeToMinutes($this->input('start_time'));
+        $endMinutes = $this->timeToMinutes($this->input('end_time'));
+
+        if ($startMinutes === null || $endMinutes === null || $endMinutes <= $startMinutes) {
+            return;
+        }
+
+        $this->merge([
+            'work_minutes' => $endMinutes - $startMinutes,
+        ]);
+    }
+
+    private function timeToMinutes(mixed $time): ?int
+    {
+        if (! is_string($time) || ! preg_match('/^\d{2}:\d{2}$/', $time)) {
+            return null;
+        }
+
+        [$hour, $minute] = array_map('intval', explode(':', $time));
+
+        return ($hour * 60) + $minute;
     }
 }

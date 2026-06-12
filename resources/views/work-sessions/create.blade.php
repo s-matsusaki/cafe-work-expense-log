@@ -18,7 +18,7 @@
         </a>
     </div>
 
-    <form action="{{ route('work-sessions.store') }}" method="POST" class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+    <form action="{{ route('work-sessions.store') }}" method="POST" class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm" data-work-session-form>
         @csrf
 
         <div class="grid gap-6">

@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <form action="{{ route('work-sessions.update', $workSession) }}" method="POST" class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+    <form action="{{ route('work-sessions.update', $workSession) }}" method="POST" class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm" data-work-session-form>
         @csrf
         @method('PUT')
 

@@ -69,6 +69,33 @@ class WorkSessionTest extends TestCase
         ]);
     }
 
+    public function test_work_minutes_are_calculated_from_time_range_when_blank(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->post(route('work-sessions.store'), [
+                'work_date' => '2026-05-19',
+                'start_time_hour' => '09',
+                'start_time_minute' => '30',
+                'end_time_hour' => '12',
+                'end_time_minute' => '00',
+                'title' => 'Auto Calculated Work',
+                'work_minutes' => '',
+            ]);
+
+        $response->assertRedirect(route('work-sessions.index'));
+
+        $this->assertDatabaseHas('work_sessions', [
+            'user_id' => $user->id,
+            'start_time' => '09:30',
+            'end_time' => '12:00',
+            'title' => 'Auto Calculated Work',
+            'work_minutes' => 150,
+        ]);
+    }
+
     public function test_user_can_view_own_work_session(): void
     {
         $user = User::factory()->create();
